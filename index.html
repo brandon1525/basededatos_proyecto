@@ -15,9 +15,16 @@
 
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" type="text/css" href="css/estilos.css">
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <script src="js/funciones.js"></script>
+  
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/funciones.js"></script>
   </head>
   <body>
   	<div class="container">
@@ -31,22 +38,31 @@
         </div>
   		</div>
   		<div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 text-center">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Ingrese id">
-              <span class="input-group-btn">
-                <button class="btn btn-default" type="button">Buscar</button>
-              </span>
-            </div><!-- /input-group -->
+              <span class="input-group-addon" id="basic-addon3">Ingrese id del profesor o alumno a buscar</span>
+              <input type="text" class="form-control" aria-describedby="basic-addon3" placeholder="ID">
+            </div>
+            <p></p>
+            <label for="datos_personales_nombre">Ingrese sus siguientes datos personales</label>
+            <p></p>
+            <input type="text" class="form-control " id="datos_peronales_nombre" placeholder="Nombre">
+            <p></p>
+            <input type="text" class="form-control " id="datos_peronales_apellido" placeholder="Apellido">
+            <p></p>
+            <label for="datos_personales_nombre"> 
+              Razón por la cual lo/a busca <span class="glyphicon glyphicon-question-sign"> </span> 
+            </label>
+            <textarea class="form-control" rows="5" id="datos_personales_razon"></textarea>
+            <p></p>
+            <p></p>
+            <button type="button" class="btn btn-default btn-lg" id="btn_buscar">
+              <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Buscar
+            </button>
         </div>
-        <div class="col-md-1"></div>
+        <div class="col-md-3"></div>
   		</div>
   	</div> <!--div container -->
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
   </body>
 </html>
