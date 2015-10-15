@@ -1,3 +1,9 @@
 textarea {
     resize: none;
 }
+#texto_cabeza {
+    font-family: 'Poiret One', cursive;
+}
+#basic-addon3{
+	font-family: 'Gloria Hallelujah', cursive;
+}
