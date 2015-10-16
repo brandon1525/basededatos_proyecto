@@ -2,16 +2,17 @@ textarea {
     resize: none;
 }
 body{
-	background-color: #D2F08F;
+	background-color: #447D95;
 }
 #texto_cabeza {
     font-family: 'Poiret One', cursive;
-    color: #341127;
+    color: #FFF4F2;
 }
 
 .input-group,#text-ingresa-datos,#datos_peronales_nombre,
 #datos_peronales_apellido,#text-razon,#datos_personales_razon,
 #btn_buscar{
 	font-family: 'Gloria Hallelujah', cursive;
-	color: #2A797C;
+	color: #FFF4F2;
+	font-size: 1.2em;
 }
