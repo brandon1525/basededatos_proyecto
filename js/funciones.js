@@ -1,4 +1,4 @@
-$( document ).ready(function() {
+34579$( document ).ready(function() {
     $('#btn_buscar').click( function (){
     	$.ajax({
 				url: "http://192.168.15.251:3000/negocio",
