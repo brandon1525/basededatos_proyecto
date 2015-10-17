@@ -9,8 +9,7 @@ body{
     color: #D7D7D7;
 }
 
-.input-group,#text-ingresa-datos,#datos_peronales_nombre,
-#datos_peronales_apellido,#text-razon,#datos_personales_razon{
+.input-group,#text-ingresa-datos,#text-razon{
 	font-family: 'Gloria Hallelujah', cursive;
 	color: #FFF4F2;
 	font-size: 1.2em;
@@ -18,4 +17,9 @@ body{
 #btn_buscar{
 	background-color: #003F3D;
 	color: #FFF4F2;
+}
+#datos_peronales_nombre,
+#datos_peronales_apellido,
+#datos_personales_razon{
+	
 }
