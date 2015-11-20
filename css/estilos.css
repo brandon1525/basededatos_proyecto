@@ -2,24 +2,28 @@ textarea {
     resize: none;
 }
 body{
-	background-color: #216764;
+	background-color: #FFFFFF;
 }
 #texto_cabeza {
     font-family: 'Poiret One', cursive;
-    color: #D7D7D7;
+    color: #003F3D;
 }
 
-.input-group,#text-ingresa-datos,#text-razon{
-	font-family: 'Gloria Hallelujah', cursive;
-	color: #FFF4F2;
+#text-ingresa-datos,#text-razon{
+	font-family: 'Poiret One', cursive;
+	color: #003F3D;
 	font-size: 1.2em;
 }
 #btn_buscar{
 	background-color: #003F3D;
-	color: #FFF4F2;
+	color: #fff;
 }
+#datos_id,
 #datos_peronales_nombre,
 #datos_peronales_apellido,
 #datos_personales_razon{
-	
+	background-color: #fff;
+	color: #555;
+	font-family: 'Poiret One', cursive;
+	font-size: 1.2em;
 }

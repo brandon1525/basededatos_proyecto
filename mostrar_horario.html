@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset='utf-8' />
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <link rel="shortcut icon" type="image/x-icon" href="images/place4.ico">
+    <title>Servicio de Ubicación de la Universidad Autónoma de Aguascalientes</title>
+
+    <!-- Bootstrap -->
+    
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Latest compiled and minified CSS -->
+	<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
+
+	<!-- Optional theme -->
+	<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"> -->
+  <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Gloria+Hallelujah' rel='stylesheet' type='text/css'>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
+  
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <link rel="stylesheet" type="text/css" href="css/estilos.css">
+    <link href='css/fullcalendar.css' rel='stylesheet' />
+    <link href='css/fullcalendar.print.css' rel='stylesheet' media='print' />
+    <script src='js/moment.min.js'></script>
+    <script src='js/fullcalendar.min.js'></script>
+    <script src="js/lang-all.js"></script>
+<script>
+
+$(document).ready(function() {
+  $('#calendar').fullCalendar({
+    header: {
+      left: '',
+      center: '',
+      right: ''
+    },
+    selectable: false,
+    selectHelper: true,
+    columnFormat: {
+      week: 'dd'
+    },
+    timeFormat: 'h:(mm)a',
+    slotLabelFormat: 'h:mma',
+    allDaySlot: false,
+    editable: false,
+    defaultView: 'agendaWeek',
+    defaultDate: '2015-11-09',
+    lang: 'es' // allow "more" link when too many events Diseño de estabilidad  por Routh-Horwitz aplicacion(ejemplos) con k
+
+  });
+  cargar_eventos();
+  function cargar_eventos () {
+    if (localStorage.datos_horario) {
+      var curEvents = [];
+      var eventosFinal =[];
+      var datos = JSON.parse(localStorage.datos_horario);
+      console.log(datos);
+      //console.log(datos[0].ESTADO_CAMPUS);
+      $('#dato_estado').text((JSON.stringify(datos[0].ESTADO_CAMPUS)).substring(1,(JSON.stringify(datos[0].ESTADO_CAMPUS)).length-1));
+      $('#dato_ciudad').text((JSON.stringify(datos[0].CIUDAD_CAMPUS)).substring(1,(JSON.stringify(datos[0].CIUDAD_CAMPUS)).length-1));
+      $('#dato_campus').text((JSON.stringify(datos[0].NOMBRE_CAMPUS)).substring(1,(JSON.stringify(datos[0].NOMBRE_CAMPUS)).length-1));
+      $('#dato_colonia').text((JSON.stringify(datos[0].COLONIA)).substring(1,(JSON.stringify(datos[0].COLONIA)).length-1));
+      $('#dato_calle').text((JSON.stringify(datos[0].CALLE)).substring(1,(JSON.stringify(datos[0].CALLE)).length-1));
+      $('#dato_noext').text((JSON.stringify(datos[0].NUMERO_EXT)).substring(1,(JSON.stringify(datos[0].NUMERO_EXT)).length-1));
+      $('#dato_latitud').text((JSON.stringify(datos[0].LATITUD)).substring(1,(JSON.stringify(datos[0].LATITUD)).length-1));
+      $('#dato_longitud').text((JSON.stringify(datos[0].LONGITUD)).substring(1,(JSON.stringify(datos[0].LONGITUD)).length-1));
+      $('#dato_nombre').text((JSON.stringify(datos[0].NOMBRE)).substring(1,(JSON.stringify(datos[0].NOMBRE)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOP)).substring(1,(JSON.stringify(datos[0].APELLIDOP)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOM)).substring(1,(JSON.stringify(datos[0].APELLIDOM)).length-1));
+      $('#dato_syg').text((JSON.stringify(datos[0].SEMESTRE)).substring(1,(JSON.stringify(datos[0].SEMESTRE)).length-1)+"°"+(JSON.stringify(datos[0].LETRA_GRUPO)).substring(1,(JSON.stringify(datos[0].LETRA_GRUPO)).length-1));
+      $('#dato_carrera').text((JSON.stringify(datos[0].NOMBRE_CARRERA)).substring(1,(JSON.stringify(datos[0].NOMBRE_CARRERA)).length-1));
+    }else{
+      alert("no has ingresado correctamente");
+      window.location="index.html";
+    }
+  }
+
+});
+
+</script>
+<style>
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+    font-size: 14px;
+  }
+
+  #script-warning {
+    display: none;
+    background: #eee;
+    border-bottom: 1px solid #ddd;
+    padding: 0 10px;
+    line-height: 40px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 12px;
+    color: red;
+  }
+
+  #loading {
+    display: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+  #calendar {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 10px;
+  }
+
+</style>
+
+
+  </head>
+  <body>
+  <div class="row">
+    <div class="col-xs-1">
+    </div>
+    <div clasS="col-xs-10 text-center">
+      <h1 id="texto_cabeza">Sistema de localizacion de la Universidad Autónoma de Aguascalientes</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-1"></div>
+    <div class="col-xs-3">
+      <h4> <span class="glyphicon glyphicon-map-marker"> </span>Estado: <small id="dato_estado"></small></h4>
+    </div>
+    <div class="col-xs-3">
+      <h4> <span class="glyphicon glyphicon-map-marker"> </span>Ciudad: <small id="dato_ciudad"></small></h4>
+    </div>
+    <div class="col-xs-3">
+      <h4> <span class="glyphicon glyphicon-map-marker"> </span>Campus: <small id="dato_campus"></small></h4>
+    </div>
+    
+  </div>
+  <div class="row">
+    <div class="col-xs-1"></div>
+    <div class="col-xs-3">
+      <h4> <span class="glyphicon glyphicon-map-marker"> </span>Colonia: <small id="dato_colonia"></small></h4>
+    </div>
+    <div class="col-xs-3">
+      <h4> <span class="glyphicon glyphicon-map-marker"> </span>Calle: <small id="dato_calle"></small></h4>
+    </div>
+    <div class="col-xs-3">
+      <h4> <span class="glyphicon glyphicon-map-marker"> </span>N° Exterior: <small id="dato_noext"></small></h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-3"></div>
+    <div class="col-xs-3">
+      <h4> <span class="glyphicon glyphicon-map-marker"> </span>Latitud: <small id="dato_latitud"></small></h4>
+    </div>
+    <div class="col-xs-3">
+      <h4> <span class="glyphicon glyphicon-map-marker"> </span>Longitud: <small id="dato_longitud"></small></h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-1"></div>
+    <div class="col-xs-3">
+      <h4> <span class="glyphicon glyphicon-user"> </span>Nombre: <small id="dato_nombre"></small></h4>
+    </div>
+    <div class="col-xs-3">
+      <h4> <span class="glyphicon glyphicon-user"> </span>Semestre Grupo: <small id="dato_syg"></small></h4>
+    </div>
+    <div class="col-xs-3">
+      <h4> <span class="glyphicon glyphicon-user"> </span>Carrera: <small id="dato_carrera"></small></h4>
+    </div>
+  </div>
+
+  <hr role="separator" class="divider"/>
+  <div class="row">
+    <div class="col-xs-1">
+    </div>
+    <div class="col-xs-10">
+      <div id='calendar'></div>
+    </div>
+  </div>
+  </body>
+</html>
