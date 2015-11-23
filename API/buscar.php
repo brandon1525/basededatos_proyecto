@@ -16,7 +16,7 @@ require 'modelo.php';
         if ($retorno) {
             $persona["result"] = "true";
             $persona["horario"] = $retorno;
-            if (array_key_exists('ID_PROFESOR', $retorno)) {
+            if (array_key_exists('TIPO_PROFESOR', $retorno[0])) {
                 $persona['clases']= Modelo::getClasesByIdForProfesor($id_persona);
             }else{
                 $persona['clases']= Modelo::getClasesByIdForAlumno($id_persona);
