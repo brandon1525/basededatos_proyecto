@@ -27,6 +27,7 @@ $( document ).ready(function() {
 				if(json.result=="true"){
 					console.log(json.horario);
 					localStorage.setItem("datos_horario", JSON.stringify(json.horario));
+					localStorage.setItem("horario_persona",JSON.stringify(json.clases));
 				   	window.location="mostrar_horario.html";
 				}else{
 				   	alert("Algo salió mal");

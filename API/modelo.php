@@ -86,17 +86,67 @@ class Modelo{
                         $rows = $comando->fetchAll(PDO::FETCH_ASSOC);
                         return $rows;
                     }else{
-                        //es profesor
+                        $consulta = "SELECT t6.NOMBRE AS ESTADO_CAMPUS,ciudad.NOMBRE AS CIUDAD_CAMPUS,t6.NOMBRE_CAMPUS,t6.LATITUD,t6.LONGITUD,t6.COLONIA,t6.CALLE,t6.NUMERO_EXT,t6.ID_PROFESOR as ID_PERSONA,t6.NOMBRE_PROFESOR AS NOMBRE,t6.APELLIDOP_PROFESOR AS APELLIDOP,t6.APELLIDOM_PROFESOR AS APELLIDOM,t6.FECHA_NACIMIENTO_PROFESOR AS FECHA_NACIMIENTO,t6.CONFIGURACION_PROFESOR AS ID_CONFIGURACION,t6.TIPO_PROFESOR FROM ciudad
+                        INNER JOIN(
+                            (SELECT estado.NOMBRE,t5.ID_CIUDAD,t5.COLONIA,t5.CALLE,t5.NUMERO_EXT,t5.NOMBRE_CAMPUS,t5.LATITUD,t5.LONGITUD,t5.ID_PROFESOR,t5.NOMBRE_PROFESOR,t5.APELLIDOP_PROFESOR,t5.APELLIDOM_PROFESOR,t5.FECHA_NACIMIENTO_PROFESOR,t5.CONFIGURACION_PROFESOR,t5.TIPO_PROFESOR FROM estado
+                            INNER JOIN(
+                                (SELECT direccion.ID_ESTADO,direccion.ID_CIUDAD,direccion.COLONIA,direccion.CALLE,direccion.NUMERO_EXT,t4.NOMBRE_CAMPUS,t4.LATITUD,t4.LONGITUD,t4.ID_PROFESOR,t4.NOMBRE_PROFESOR,t4.APELLIDOP_PROFESOR,t4.APELLIDOM_PROFESOR,t4.FECHA_NACIMIENTO_PROFESOR,t4.CONFIGURACION_PROFESOR, t4.TIPO_PROFESOR FROM direccion
+                                INNER JOIN(
+                                    (SELECT campus.NOMBRE AS NOMBRE_CAMPUS,campus.ID_DIRECCION,t3.LATITUD,t3.LONGITUD,t3.ID_PROFESOR,t3.NOMBRE_PROFESOR,t3.APELLIDOP_PROFESOR,t3.APELLIDOM_PROFESOR,t3.FECHA_NACIMIENTO_PROFESOR,t3.CONFIGURACION_PROFESOR, t3.TIPO_PROFESOR FROM campus
+                                    INNER JOIN(
+                                        (SELECT ubicacion.LATITUD,ubicacion.LONGITUD,ubicacion.ID_CAMPUS, t2.ID_PROFESOR,t2.NOMBRE_PROFESOR,t2.APELLIDOP_PROFESOR,t2.APELLIDOM_PROFESOR,t2.FECHA_NACIMIENTO_PROFESOR,t2.CONFIGURACION_PROFESOR,t2.TIPO_PROFESOR FROM ubicacion
+                                        INNER JOIN(
+                                            (SELECT persona.ID AS ID_PROFESOR,persona.NOMBRE AS NOMBRE_PROFESOR, persona.APELLIDOP AS APELLIDOP_PROFESOR, persona.APELLIDOM AS APELLIDOM_PROFESOR, persona.FECHA_NACIMIENTO AS FECHA_NACIMIENTO_PROFESOR, persona.ID_CONFIGURACION AS CONFIGURACION_PROFESOR,t1.ID_UBICACION AS UBICACION_PROFESOR, t1.TIPO AS TIPO_PROFESOR FROM persona
+                                            INNER JOIN(
+                                                (SELECT * FROM profesor
+                                                WHERE profesor.ID_PERSONA=?) AS t1)
+                                            ON persona.ID=t1.ID_PERSONA) AS t2)
+                                        ON ubicacion.ID=t2.UBICACION_PROFESOR) AS t3)
+                                    ON campus.ID=t3.ID_CAMPUS) AS t4)
+                                ON direccion.ID=t4.ID_DIRECCION) AS t5)
+                            ON estado.ID=t5.ID_ESTADO) AS t6)
+                        ON ciudad.ID=t6.ID_CIUDAD";
+                        $comando = Database::getInstance()->getDb()->prepare($consulta);
+                        $comando -> execute(array($id_persona));
+                        $rows = $comando->fetchAll(PDO::FETCH_ASSOC);
+                        return $rows;
                     }
-                    //$fila = mysql_fetch_row($rows);
-                    //echo $fila[0]; // 42
-                    //echo $fila[1]; // el valor de email
                 }else{
                     die(mysql_error());
                 }
             }else{
                 //no se ejecuto
                 echo "No se pudo ejecutar con exito la consulta ($sql) en la BD: " . mysql_error();
+            }
+        }catch(PDOException $e){
+            return false;
+        }
+    }
+    public static function getClasesByIdForAlumno($id_alumno){
+        try{
+            $consulta = "SELECT * FROM clase where ID_ALUMNO = ?";
+            $comando = Database::getInstance()->getDb()->prepare($consulta);
+            $comando->execute(array($id_alumno));
+            $rows = $comando->fetchAll(PDO::FETCH_ASSOC);
+            if($rows){
+                return $rows;
+            }else{
+                echo "Esa persona (alumno) no tiene clases clases" . mysql_error();
+            }
+        }catch(PDOException $e){
+            return false;
+        }
+    }
+    public static function getClasesByIdForProfesor($id_profesor){
+        try{
+            $consulta = "SELECT * FROM clase WHERE ID_PROFESOR = ?";
+            $comando = Database::getInstance()->getDb()->prepare($consulta);
+            $comando->execute(array($id_profesor));
+            $rows = $comando->fetchAll(PDO::FETCH_ASSOC);
+            if($rows){
+                return $rows;
+            }else{
+                echo "Esa persona (profesor) no tiene clases clases".mysql_error();
             }
         }catch(PDOException $e){
             return false;

@@ -61,7 +61,9 @@ $(document).ready(function() {
       var curEvents = [];
       var eventosFinal =[];
       var datos = JSON.parse(localStorage.datos_horario);
+      var clases = JSON.parse(localStorage.horario_persona);
       console.log(datos);
+      console.log(clases);
       //console.log(datos[0].ESTADO_CAMPUS);
       $('#dato_estado').text((JSON.stringify(datos[0].ESTADO_CAMPUS)).substring(1,(JSON.stringify(datos[0].ESTADO_CAMPUS)).length-1));
       $('#dato_ciudad').text((JSON.stringify(datos[0].CIUDAD_CAMPUS)).substring(1,(JSON.stringify(datos[0].CIUDAD_CAMPUS)).length-1));
@@ -72,8 +74,16 @@ $(document).ready(function() {
       $('#dato_latitud').text((JSON.stringify(datos[0].LATITUD)).substring(1,(JSON.stringify(datos[0].LATITUD)).length-1));
       $('#dato_longitud').text((JSON.stringify(datos[0].LONGITUD)).substring(1,(JSON.stringify(datos[0].LONGITUD)).length-1));
       $('#dato_nombre').text((JSON.stringify(datos[0].NOMBRE)).substring(1,(JSON.stringify(datos[0].NOMBRE)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOP)).substring(1,(JSON.stringify(datos[0].APELLIDOP)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOM)).substring(1,(JSON.stringify(datos[0].APELLIDOM)).length-1));
-      $('#dato_syg').text((JSON.stringify(datos[0].SEMESTRE)).substring(1,(JSON.stringify(datos[0].SEMESTRE)).length-1)+"°"+(JSON.stringify(datos[0].LETRA_GRUPO)).substring(1,(JSON.stringify(datos[0].LETRA_GRUPO)).length-1));
-      $('#dato_carrera').text((JSON.stringify(datos[0].NOMBRE_CARRERA)).substring(1,(JSON.stringify(datos[0].NOMBRE_CARRERA)).length-1));
+      if(datos[0].SEMESTRE!=null && datos[0].LETRA_GRUPO!=null && datos[0].NOMBRE_CARRERA!=null){
+        $('#dato_syg').text((JSON.stringify(datos[0].SEMESTRE)).substring(1,(JSON.stringify(datos[0].SEMESTRE)).length-1)+"°"+(JSON.stringify(datos[0].LETRA_GRUPO)).substring(1,(JSON.stringify(datos[0].LETRA_GRUPO)).length-1));
+        $('#dato_carrera').text((JSON.stringify(datos[0].NOMBRE_CARRERA)).substring(1,(JSON.stringify(datos[0].NOMBRE_CARRERA)).length-1));
+      }else if(datos[0].TIPO_PROFESOR){
+        $('#dato_syg').hide();
+        $('#dato_carrera').hide();
+        $('.solo_alumno').hide();
+        alert("es profesor");
+      }
+      
     }else{
       alert("no has ingresado correctamente");
       window.location="index.html";
@@ -138,10 +148,10 @@ $(document).ready(function() {
     <div class="col-md-3">
       <h4> <span class="glyphicon glyphicon-user"> </span>Nombre: <small id="dato_nombre"></small></h4>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 solo_alumno">
       <h4> <span class="glyphicon glyphicon-user"> </span>Semestre Grupo: <small id="dato_syg"></small></h4>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 solo_alumno">
       <h4> <span class="glyphicon glyphicon-user"> </span>Carrera: <small id="dato_carrera"></small></h4>
     </div>
   </div>

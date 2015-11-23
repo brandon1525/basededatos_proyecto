@@ -14,9 +14,14 @@ require 'modelo.php';
         $hora_consulta = $_GET['hora'];
         $retorno = Modelo::getPersonaById($id_persona,$nombre,$apellido,$descripcion,$fecha_consulta,$hora_consulta);
         if ($retorno) {
-            $horario["result"] = "true";
-            $horario["horario"] = $retorno;
-            echo json_encode($horario);
+            $persona["result"] = "true";
+            $persona["horario"] = $retorno;
+            if (array_key_exists('ID_PROFESOR', $retorno)) {
+                $persona['clases']= Modelo::getClasesByIdForProfesor($id_persona);
+            }else{
+                $persona['clases']= Modelo::getClasesByIdForAlumno($id_persona);
+            }
+            echo json_encode($persona);
         } else {
             echo json_encode(
                 array(
