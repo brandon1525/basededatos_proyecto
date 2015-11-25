@@ -21,6 +21,7 @@ require 'modelo.php';
             }else{
                 $persona['clases']= Modelo::getClasesByIdForAlumno($id_persona);
             }
+            $persona['configuracion']=Modelo::getConfigurationByIdForPerson($id_persona);
             echo json_encode($persona);
         } else {
             echo json_encode(

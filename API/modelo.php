@@ -152,7 +152,25 @@ class Modelo{
             return false;
         }
     }
-
+    public static function getConfigurationByIdForPerson($id_persona){
+        try{
+            $consulta = "SELECT configuracion_persona.COMPARTIR_UBICACION,configuracion_persona.COMPARTIR_HORARIO,configuracion_persona.COMPARTIR_PROFESOR FROM configuracion_persona
+            INNER JOIN(
+                (SELECT * FROM persona
+                WHERE persona.ID=?)AS T1)
+            ON configuracion_persona.ID=T1.ID_CONFIGURACION";
+            $comando = Database::getInstance()->getDb()->prepare($consulta);
+            $comando->execute(array($id_persona));
+            $rows = $comando->fetchAll(PDO::FETCH_ASSOC);
+            if($rows){
+                return $rows;
+            }else{
+                echo "Algo salio mal al obtener la configuracion_persona".mysql_error();
+            }
+        }catch(PDOException $e){
+            return false;
+        }
+    }
 
     public static function update($id,$ruta,$latitud,$longitud,$velocidad,$en_servicio)
     {
