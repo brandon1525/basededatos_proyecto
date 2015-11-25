@@ -62,9 +62,14 @@ $(document).ready(function() {
       var eventosFinal =[];
       var datos = JSON.parse(localStorage.datos_horario);
       var clases = JSON.parse(localStorage.horario_persona);
+      var configuracion_persona=JSON.parse(localStorage.configuracion_persona);
       console.log(datos);
       console.log(clases);
+      console.log(configuracion_persona);
       //console.log(datos[0].ESTADO_CAMPUS);
+      comparte_ubicacion(configuracion_persona[0].COMPARTIR_UBICACION);
+      comparte_profesor(configuracion_persona[0].COMPARTIR_PROFESOR);
+      comparte_horario(configuracion_persona[0].COMPARTIR_HORARIO)
       $('#dato_estado').text((JSON.stringify(datos[0].ESTADO_CAMPUS)).substring(1,(JSON.stringify(datos[0].ESTADO_CAMPUS)).length-1));
       $('#dato_ciudad').text((JSON.stringify(datos[0].CIUDAD_CAMPUS)).substring(1,(JSON.stringify(datos[0].CIUDAD_CAMPUS)).length-1));
       $('#dato_campus').text((JSON.stringify(datos[0].NOMBRE_CAMPUS)).substring(1,(JSON.stringify(datos[0].NOMBRE_CAMPUS)).length-1));
@@ -87,6 +92,27 @@ $(document).ready(function() {
     }else{
       alert("no has ingresado correctamente");
       window.location="index.html";
+    }
+  }
+  function comparte_ubicacion (argument) {
+   if (argument=="1") {
+    alert("comparte Ubicación");
+   }else if(argument=="0"){
+    alert("No comparte ubicacion");
+   }
+  }
+  function comparte_profesor (argument) {
+    if(argument=="1"){
+      alert("comparte profesor");
+    }else if(argument=="0"){
+      alert("No comparte profesor");
+    }
+  }
+  function comparte_horario (argument) {
+    if(argument=="1"){
+      alert("comparte_horario");
+    }else if(argument="0"){
+      alert("no comparte horario");
     }
   }
 

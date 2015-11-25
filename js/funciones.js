@@ -28,6 +28,7 @@ $( document ).ready(function() {
 					console.log(json.horario);
 					localStorage.setItem("datos_horario", JSON.stringify(json.horario));
 					localStorage.setItem("horario_persona",JSON.stringify(json.clases));
+					localStorage.setItem("configuracion_persona",JSON.stringify(json.configuracion));
 				   	window.location="mostrar_horario.html";
 				}else{
 				   	alert("Algo salió mal");
@@ -36,3 +37,6 @@ $( document ).ready(function() {
 		}
     });
 });
+53741171
+55
+56631945
