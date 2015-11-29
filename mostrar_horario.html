@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset='utf-8' />
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <link rel="shortcut icon" type="image/x-icon" href="images/place4.ico">
@@ -33,6 +33,78 @@
     <script src='js/moment.min.js'></script>
     <script src='js/fullcalendar.min.js'></script>
     <script src="js/lang-all.js"></script>
+    <style>
+      #calendar {
+        max-width: auto;
+        max-height: auto;
+        margin: 40px auto;
+        padding: 0 10px;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div clasS="col-md-10 text-center">
+          <h1 id="texto_cabeza">Sistema de localizacion de la Universidad Autónoma de Aguascalientes</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-2">
+          <h4> <span class="glyphicon glyphicon-map-marker"> </span>Estado: <small id="dato_estado"></small></h4>
+        </div>
+        <div class="col-md-2">
+          <h4> <span class="glyphicon glyphicon-map-marker"> </span>Ciudad: <small id="dato_ciudad"></small></h4>
+        </div>
+        <div class="col-md-2">
+          <h4> <span class="glyphicon glyphicon-map-marker"> </span>Campus: <small id="dato_campus"></small></h4>
+        </div>
+        <div class="col-md-2">
+          <h4> <span class="glyphicon glyphicon-map-marker"> </span>Latitud: <small id="dato_latitud"></small></h4>
+        </div>
+        <div class="col-md-2">
+          <h4> <span class="glyphicon glyphicon-map-marker"> </span>Longitud: <small id="dato_longitud"></small></h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-3">
+          <h4> <span class="glyphicon glyphicon-map-marker"> </span>Colonia: <small id="dato_colonia"></small></h4>
+        </div>
+        <div class="col-md-3">
+          <h4> <span class="glyphicon glyphicon-map-marker"> </span>Calle: <small id="dato_calle"></small></h4>
+        </div>
+        <div class="col-md-3">
+          <h4> <span class="glyphicon glyphicon-map-marker"> </span>N° Exterior: <small id="dato_noext"></small></h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-3">
+          <h4> <span class="glyphicon glyphicon-user"></span>Nombre: <small id="dato_nombre"></small></h4>
+        </div>
+        <div class="col-md-3 solo_alumno">
+          <h4> <span class="glyphicon glyphicon-user"></span>Semestre Grupo: <small id="dato_syg"></small></h4>
+        </div>
+        <div class="col-md-3 solo_alumno">
+          <h4> <span class="glyphicon glyphicon-user"></span>Carrera: <small id="dato_carrera"></small></h4>
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-md-6" id="map"></div>
+        <div class="col-md-6">
+          <div id='calendar'></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
 <script>
 $(document).ready(function() {
   $('#calendar').fullCalendar({
@@ -52,42 +124,18 @@ $(document).ready(function() {
     editable: false,
     defaultView: 'agendaWeek',
     defaultDate: '2015-11-09',
-    lang: 'es' // allow "more" link when too many events Diseño de estabilidad  por Routh-Horwitz aplicacion(ejemplos) con k
-
+    lang: 'es' 
   });
   cargar_eventos();
   function cargar_eventos () {
     if (localStorage.datos_horario) {
       var curEvents = [];
       var eventosFinal =[];
-      var datos = JSON.parse(localStorage.datos_horario);
-      var clases = JSON.parse(localStorage.horario_persona);
       var configuracion_persona=JSON.parse(localStorage.configuracion_persona);
-      console.log(datos);
-      console.log(clases);
-      console.log(configuracion_persona);
-      //console.log(datos[0].ESTADO_CAMPUS);
+      //console.log(configuracion_persona);
       comparte_ubicacion(configuracion_persona[0].COMPARTIR_UBICACION);
       comparte_profesor(configuracion_persona[0].COMPARTIR_PROFESOR);
-      comparte_horario(configuracion_persona[0].COMPARTIR_HORARIO)
-      $('#dato_estado').text((JSON.stringify(datos[0].ESTADO_CAMPUS)).substring(1,(JSON.stringify(datos[0].ESTADO_CAMPUS)).length-1));
-      $('#dato_ciudad').text((JSON.stringify(datos[0].CIUDAD_CAMPUS)).substring(1,(JSON.stringify(datos[0].CIUDAD_CAMPUS)).length-1));
-      $('#dato_campus').text((JSON.stringify(datos[0].NOMBRE_CAMPUS)).substring(1,(JSON.stringify(datos[0].NOMBRE_CAMPUS)).length-1));
-      $('#dato_colonia').text((JSON.stringify(datos[0].COLONIA)).substring(1,(JSON.stringify(datos[0].COLONIA)).length-1));
-      $('#dato_calle').text((JSON.stringify(datos[0].CALLE)).substring(1,(JSON.stringify(datos[0].CALLE)).length-1));
-      $('#dato_noext').text((JSON.stringify(datos[0].NUMERO_EXT)).substring(1,(JSON.stringify(datos[0].NUMERO_EXT)).length-1));
-      $('#dato_latitud').text((JSON.stringify(datos[0].LATITUD)).substring(1,(JSON.stringify(datos[0].LATITUD)).length-1));
-      $('#dato_longitud').text((JSON.stringify(datos[0].LONGITUD)).substring(1,(JSON.stringify(datos[0].LONGITUD)).length-1));
-      $('#dato_nombre').text((JSON.stringify(datos[0].NOMBRE)).substring(1,(JSON.stringify(datos[0].NOMBRE)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOP)).substring(1,(JSON.stringify(datos[0].APELLIDOP)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOM)).substring(1,(JSON.stringify(datos[0].APELLIDOM)).length-1));
-      if(datos[0].SEMESTRE!=null && datos[0].LETRA_GRUPO!=null && datos[0].NOMBRE_CARRERA!=null){
-        $('#dato_syg').text((JSON.stringify(datos[0].SEMESTRE)).substring(1,(JSON.stringify(datos[0].SEMESTRE)).length-1)+"°"+(JSON.stringify(datos[0].LETRA_GRUPO)).substring(1,(JSON.stringify(datos[0].LETRA_GRUPO)).length-1));
-        $('#dato_carrera').text((JSON.stringify(datos[0].NOMBRE_CARRERA)).substring(1,(JSON.stringify(datos[0].NOMBRE_CARRERA)).length-1));
-      }else if(datos[0].TIPO_PROFESOR){
-        $('#dato_syg').hide();
-        $('#dato_carrera').hide();
-        $('.solo_alumno').hide();
-        alert("es profesor");
-      }
+      comparte_horario(configuracion_persona[0].COMPARTIR_HORARIO);
       
     }else{
       alert("no has ingresado correctamente");
@@ -95,11 +143,37 @@ $(document).ready(function() {
     }
   }
   function comparte_ubicacion (argument) {
+    var datos = JSON.parse(localStorage.datos_horario);
    if (argument=="1") {
-    alert("comparte Ubicación");
+    $('#dato_estado').text((JSON.stringify(datos[0].ESTADO_CAMPUS)).substring(1,(JSON.stringify(datos[0].ESTADO_CAMPUS)).length-1));
+    $('#dato_ciudad').text((JSON.stringify(datos[0].CIUDAD_CAMPUS)).substring(1,(JSON.stringify(datos[0].CIUDAD_CAMPUS)).length-1));
+    $('#dato_campus').text((JSON.stringify(datos[0].NOMBRE_CAMPUS)).substring(1,(JSON.stringify(datos[0].NOMBRE_CAMPUS)).length-1));
+    $('#dato_colonia').text((JSON.stringify(datos[0].COLONIA)).substring(1,(JSON.stringify(datos[0].COLONIA)).length-1));
+    $('#dato_calle').text((JSON.stringify(datos[0].CALLE)).substring(1,(JSON.stringify(datos[0].CALLE)).length-1));
+    $('#dato_noext').text((JSON.stringify(datos[0].NUMERO_EXT)).substring(1,(JSON.stringify(datos[0].NUMERO_EXT)).length-1));
+    $('#dato_latitud').text((JSON.stringify(datos[0].LATITUD)).substring(1,(JSON.stringify(datos[0].LATITUD)).length-1));
+    $('#dato_longitud').text((JSON.stringify(datos[0].LONGITUD)).substring(1,(JSON.stringify(datos[0].LONGITUD)).length-1));
+    $('#dato_nombre').text((JSON.stringify(datos[0].NOMBRE)).substring(1,(JSON.stringify(datos[0].NOMBRE)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOP)).substring(1,(JSON.stringify(datos[0].APELLIDOP)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOM)).substring(1,(JSON.stringify(datos[0].APELLIDOM)).length-1));
+    if(datos[0].SEMESTRE!=null && datos[0].LETRA_GRUPO!=null && datos[0].NOMBRE_CARRERA!=null){
+      $('#dato_syg').text((JSON.stringify(datos[0].SEMESTRE)).substring(1,(JSON.stringify(datos[0].SEMESTRE)).length-1)+"°"+(JSON.stringify(datos[0].LETRA_GRUPO)).substring(1,(JSON.stringify(datos[0].LETRA_GRUPO)).length-1));
+      $('#dato_carrera').text((JSON.stringify(datos[0].NOMBRE_CARRERA)).substring(1,(JSON.stringify(datos[0].NOMBRE_CARRERA)).length-1));
+    }else if(datos[0].TIPO_PROFESOR){
+      $('#dato_syg').hide();
+      $('#dato_carrera').hide();
+      $('.solo_alumno').hide();
+    }
    }else if(argument=="0"){
     alert("No comparte ubicacion");
    }
+  }
+  function comparte_horario (argument) {
+    var clases = JSON.parse(localStorage.horario_persona);
+    if(argument=="1"){
+      console.log(clases);
+      
+    }else if(argument="0"){
+      alert("no comparte horario");
+    }
   }
   function comparte_profesor (argument) {
     if(argument=="1"){
@@ -108,85 +182,31 @@ $(document).ready(function() {
       alert("No comparte profesor");
     }
   }
-  function comparte_horario (argument) {
-    if(argument=="1"){
-      alert("comparte_horario");
-    }else if(argument="0"){
-      alert("no comparte horario");
-    }
-  }
-
 });
+function initMap() {
 
+  var myLatLng = {lat: 21.96932, lng: -102.37457};
+
+
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 18,
+    center: myLatLng
+  });
+
+  var marker = new google.maps.Marker({
+    position: myLatLng,
+    map: map,
+    title: 'Encontrado!'
+  });
+}
+    // The mapping between latitude, longitude and pixels is defined by the web
+    // mercator projection.
+$(window).resize(function () {
+  var h = $(window).height(),
+    offsetTop = 30; // Calculate the top offset
+  $('#map').css('height', (h - offsetTop));
+}).resize();
 </script>
-<style>
-
-  #calendar {
-    /*max-width: auto;*/
-    max-height: auto;
-    margin: 40px auto;
-    padding: 0 10px;
-  }
-
-</style>
-  </head>
-<body>
-<div class="container">
-  <div class="row">
-    <div class="col-md-1">
-    </div>
-    <div clasS="col-md-10 text-center">
-      <h1 id="texto_cabeza">Sistema de localizacion de la Universidad Autónoma de Aguascalientes</h1>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-md-2">
-      <h4> <span class="glyphicon glyphicon-map-marker"> </span>Estado: <small id="dato_estado"></small></h4>
-    </div>
-    <div class="col-md-2">
-      <h4> <span class="glyphicon glyphicon-map-marker"> </span>Ciudad: <small id="dato_ciudad"></small></h4>
-    </div>
-    <div class="col-md-2">
-      <h4> <span class="glyphicon glyphicon-map-marker"> </span>Campus: <small id="dato_campus"></small></h4>
-    </div>
-    <div class="col-md-2">
-      <h4> <span class="glyphicon glyphicon-map-marker"> </span>Latitud: <small id="dato_latitud"></small></h4>
-    </div>
-    <div class="col-md-2">
-      <h4> <span class="glyphicon glyphicon-map-marker"> </span>Longitud: <small id="dato_longitud"></small></h4>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-3">
-      <h4> <span class="glyphicon glyphicon-map-marker"> </span>Colonia: <small id="dato_colonia"></small></h4>
-    </div>
-    <div class="col-md-3">
-      <h4> <span class="glyphicon glyphicon-map-marker"> </span>Calle: <small id="dato_calle"></small></h4>
-    </div>
-    <div class="col-md-3">
-      <h4> <span class="glyphicon glyphicon-map-marker"> </span>N° Exterior: <small id="dato_noext"></small></h4>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-3">
-      <h4> <span class="glyphicon glyphicon-user"> </span>Nombre: <small id="dato_nombre"></small></h4>
-    </div>
-    <div class="col-md-3 solo_alumno">
-      <h4> <span class="glyphicon glyphicon-user"> </span>Semestre Grupo: <small id="dato_syg"></small></h4>
-    </div>
-    <div class="col-md-3 solo_alumno">
-      <h4> <span class="glyphicon glyphicon-user"> </span>Carrera: <small id="dato_carrera"></small></h4>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-md-10">
-      <div id='calendar'></div>
-    </div>
-  </div>
-</div>
-</body>
-</html>
+<script async defer
+         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyq1YhAhVnpPacAUQupJ37Hw40URdHyyk&signed_in=true&callback=initMap">
+</script>
