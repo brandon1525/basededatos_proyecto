@@ -24,6 +24,11 @@ $(document).ready(function(){
         dataType:'json',
         mimeType: 'application/json'
       }).done(function(json){
+        if(json.result=="true"){
+          window.location("configuracion.html")
+        }else{
+          alert("algo salio mal");
+        }
 
       });
       }

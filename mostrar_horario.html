@@ -227,16 +227,8 @@ $(document).ready(function() {
             });
           break;
         }
-        console.log(datus.length);
-        console.log(datus);
-        //data.push(
-          //{title: i.ID_EDIFICIO, start: +"", end: +""}
-        //);
       });
-      //console.log("Horario");
-      //console.log(clases);
-
-      
+      $('#calendar').fullCalendar( 'addEventSource', datus );
     }else if(argument="0"){
       alert("no comparte horario");
       $('#calendar').hide();
