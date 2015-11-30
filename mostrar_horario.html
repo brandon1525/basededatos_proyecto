@@ -169,7 +169,7 @@ $(document).ready(function() {
   }
   function comparte_horario (argument) {
     var clases = JSON.parse(localStorage.horario_persona);
-    var data=[];
+    var datus=[];
     if(argument=="1"){
       //for(int i=0;i<clases[0].length-1;i++){
         //"title": "",
@@ -184,51 +184,51 @@ $(document).ready(function() {
         var hora_fin=item.HORA_FIN;
         var titulo = "Materia "+item.ID_MATERIA+" en el edificio "+item.ID_EDIFICIO+" con el profesor "+item.ID_PROFESOR;
         //console.log(titulo);
+        console.log(dia);
         switch(dia){
-          case 1:
-            data.push({
-              "title": titulo, 
-              "start": "2015-11-09T"+HORA_INICIO, 
-              "end": "2015-11-09T"+HORA_FIN
+          case "1":
+            datus.push({
+              title: titulo, 
+              start: "2015-11-09T"+hora_inicio, 
+              end: "2015-11-09T"+hora_fin
             });
           break;
-          case 2:
-            data.push({
-            
-              "title": titulo,
-              "start": "2015-11-10T"+HORA_INICIO,
-              "end": "2015-11-10T"+HORA_FIN
-            
-            });
-          break;
-          case 3:
-            data.push({
-            
-              "title": titulo, 
-              "start": "2015-11-11T"+HORA_INICIO, 
-              "end": "2015-11-11T"+HORA_FIN
+          case "2":
+            datus.push({
+              title: titulo,
+              start: "2015-11-10T"+hora_inicio,
+              end: "2015-11-10T"+hora_fin
             
             });
           break;
-          case 4:
-            data.push({
+          case "3":
+            datus.push({
             
-              "title": titulo, 
-              "start": "2015-11-12T"+HORA_INICIO, 
-              "end": "2015-11-12T"+HORA_FIN
+              title: titulo, 
+              start: "2015-11-11T"+hora_inicio, 
+              end: "2015-11-11T"+hora_fin
+            
+            });
+          break;
+          case "4":
+            datus.push({
+            
+              title: titulo, 
+              start: "2015-11-12T"+hora_inicio, 
+              end: "2015-11-12T"+hora_fin
 
             });
           break;
-          case 5:
-            data.push({
-              "title": titulo, 
-              "start": "2015-11-13T"+HORA_INICIO, 
-              "end": "2015-11-13T"+HORA_FIN
+          case "5":
+            datus.push({
+              title: titulo, 
+              start: "2015-11-13T"+hora_inicio, 
+              end: "2015-11-13T"+hora_fin
             });
           break;
         }
-        console.log(data.length);
-        console.log(data);
+        console.log(datus.length);
+        console.log(datus);
         //data.push(
           //{title: i.ID_EDIFICIO, start: +"", end: +""}
         //);
