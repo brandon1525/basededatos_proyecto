@@ -171,7 +171,7 @@ class Modelo{
             return false;
         }
     }
-    public static function ingresar($id_persona,$contra)
+    public static function ingresarPersonaById($id_persona,$contra)
     {
         try{
             $consulta = "SELECT * FROM persona WHERE ID = ?";

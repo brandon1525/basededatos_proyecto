@@ -171,19 +171,11 @@ $(document).ready(function() {
     var clases = JSON.parse(localStorage.horario_persona);
     var datus=[];
     if(argument=="1"){
-      //for(int i=0;i<clases[0].length-1;i++){
-        //"title": "",
-    //"start": "2015-11-09T10:30:00-05:00",
-    //"end": "2015-11-09T13:30:00-05:00"
-      //}
       $.each(clases, function(i, item) {
-        //alert(item.PageName);
-        //console.log(item);
         var dia = item.DIA;
         var hora_inicio=item.HORA_INICIO;
         var hora_fin=item.HORA_FIN;
         var titulo = "Materia "+item.ID_MATERIA+" en el edificio "+item.ID_EDIFICIO+" con el profesor "+item.ID_PROFESOR;
-        //console.log(titulo);
         console.log(dia);
         switch(dia){
           case "1":
@@ -235,10 +227,110 @@ $(document).ready(function() {
     }
   }
   function comparte_profesor (argument) {
+    var clases = JSON.parse(localStorage.horario_persona);
+    var datus=[];
     if(argument=="1"){
-      alert("comparte profesor");
+      $.each(clases, function(i, item) {
+        var dia = item.DIA;
+        var hora_inicio=item.HORA_INICIO;
+        var hora_fin=item.HORA_FIN;
+        var titulo = "Materia "+item.ID_MATERIA+" en el edificio "+item.ID_EDIFICIO+" con el profesor "+item.ID_PROFESOR;
+        console.log(dia);
+        switch(dia){
+          case "1":
+            datus.push({
+              title: titulo, 
+              start: "2015-11-09T"+hora_inicio, 
+              end: "2015-11-09T"+hora_fin
+            });
+          break;
+          case "2":
+            datus.push({
+              title: titulo,
+              start: "2015-11-10T"+hora_inicio,
+              end: "2015-11-10T"+hora_fin
+            
+            });
+          break;
+          case "3":
+            datus.push({
+            
+              title: titulo, 
+              start: "2015-11-11T"+hora_inicio, 
+              end: "2015-11-11T"+hora_fin
+            
+            });
+          break;
+          case "4":
+            datus.push({
+            
+              title: titulo, 
+              start: "2015-11-12T"+hora_inicio, 
+              end: "2015-11-12T"+hora_fin
+
+            });
+          break;
+          case "5":
+            datus.push({
+              title: titulo, 
+              start: "2015-11-13T"+hora_inicio, 
+              end: "2015-11-13T"+hora_fin
+            });
+          break;
+        }
+      });
+      $('#calendar').fullCalendar( 'addEventSource', datus );
     }else if(argument=="0"){
-      alert("No comparte profesor");
+      $.each(clases, function(i, item) {
+        var dia = item.DIA;
+        var hora_inicio=item.HORA_INICIO;
+        var hora_fin=item.HORA_FIN;
+        var titulo = "Materia "+item.ID_MATERIA+" en el edificio "+item.ID_EDIFICIO;
+        console.log(dia);
+        switch(dia){
+          case "1":
+            datus.push({
+              title: titulo, 
+              start: "2015-11-09T"+hora_inicio, 
+              end: "2015-11-09T"+hora_fin
+            });
+          break;
+          case "2":
+            datus.push({
+              title: titulo,
+              start: "2015-11-10T"+hora_inicio,
+              end: "2015-11-10T"+hora_fin
+            
+            });
+          break;
+          case "3":
+            datus.push({
+            
+              title: titulo, 
+              start: "2015-11-11T"+hora_inicio, 
+              end: "2015-11-11T"+hora_fin
+            
+            });
+          break;
+          case "4":
+            datus.push({
+            
+              title: titulo, 
+              start: "2015-11-12T"+hora_inicio, 
+              end: "2015-11-12T"+hora_fin
+
+            });
+          break;
+          case "5":
+            datus.push({
+              title: titulo, 
+              start: "2015-11-13T"+hora_inicio, 
+              end: "2015-11-13T"+hora_fin
+            });
+          break;
+        }
+      });
+      $('#calendar').fullCalendar( 'addEventSource', datus );
     }
   }
 });
