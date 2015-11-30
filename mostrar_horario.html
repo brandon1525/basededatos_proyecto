@@ -164,15 +164,82 @@ $(document).ready(function() {
     }
    }else if(argument=="0"){
     alert("No comparte ubicacion");
+    $('#map').hide();
    }
   }
   function comparte_horario (argument) {
     var clases = JSON.parse(localStorage.horario_persona);
+    var data=[];
     if(argument=="1"){
-      console.log(clases);
+      //for(int i=0;i<clases[0].length-1;i++){
+        //"title": "",
+    //"start": "2015-11-09T10:30:00-05:00",
+    //"end": "2015-11-09T13:30:00-05:00"
+      //}
+      $.each(clases, function(i, item) {
+        //alert(item.PageName);
+        //console.log(item);
+        var dia = item.DIA;
+        var hora_inicio=item.HORA_INICIO;
+        var hora_fin=item.HORA_FIN;
+        var titulo = "Materia "+item.ID_MATERIA+" en el edificio "+item.ID_EDIFICIO+" con el profesor "+item.ID_PROFESOR;
+        //console.log(titulo);
+        switch(dia){
+          case 1:
+            data.push({
+              "title": titulo, 
+              "start": "2015-11-09T"+HORA_INICIO, 
+              "end": "2015-11-09T"+HORA_FIN
+            });
+          break;
+          case 2:
+            data.push({
+            
+              "title": titulo,
+              "start": "2015-11-10T"+HORA_INICIO,
+              "end": "2015-11-10T"+HORA_FIN
+            
+            });
+          break;
+          case 3:
+            data.push({
+            
+              "title": titulo, 
+              "start": "2015-11-11T"+HORA_INICIO, 
+              "end": "2015-11-11T"+HORA_FIN
+            
+            });
+          break;
+          case 4:
+            data.push({
+            
+              "title": titulo, 
+              "start": "2015-11-12T"+HORA_INICIO, 
+              "end": "2015-11-12T"+HORA_FIN
+
+            });
+          break;
+          case 5:
+            data.push({
+              "title": titulo, 
+              "start": "2015-11-13T"+HORA_INICIO, 
+              "end": "2015-11-13T"+HORA_FIN
+            });
+          break;
+        }
+        console.log(data.length);
+        console.log(data);
+        //data.push(
+          //{title: i.ID_EDIFICIO, start: +"", end: +""}
+        //);
+      });
+      //console.log("Horario");
+      //console.log(clases);
+
       
     }else if(argument="0"){
       alert("no comparte horario");
+      $('#calendar').hide();
     }
   }
   function comparte_profesor (argument) {

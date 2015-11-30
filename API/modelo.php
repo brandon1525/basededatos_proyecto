@@ -171,6 +171,22 @@ class Modelo{
             return false;
         }
     }
+    public static function ingresar($id_persona,$contra)
+    {
+        try{
+            $consulta = "SELECT * FROM persona WHERE ID = ?";
+            $comando = Database::getInstance()->getDb()->prepare($consulta);
+            $comando->execute(array($id_persona));
+            $rows = $comando->fetchAll(PDO::FETCH_ASSOC);
+            if($rows){
+                return $rows;
+            }else{
+                echo "Esa persona no existe".mysql_error();
+            }
+        }catch(PDOException $e){
+            return false;
+        }
+    }
 
     public static function update($id,$ruta,$latitud,$longitud,$velocidad,$en_servicio)
     {
