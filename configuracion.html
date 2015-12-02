@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <link rel="shortcut icon" type="image/x-icon" href="images/place4.ico">
-    <title>Servicio de Ubicación de la Universidad Autónoma de Aguascalientes</title>
+    <title>Sistema de Localización de la Universidad Autónoma de Aguascalientes</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -19,7 +19,10 @@
   <link rel="stylesheet" type="text/css" href="css/estilos.css">
   <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Gloria+Hallelujah' rel='stylesheet' type='text/css'>
-
+  <link rel="stylesheet" type="text/css" href="css/estilos.css">
+  <link rel="stylesheet" type="text/css" href="css/bootstrap-switch.css">
+  <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Gloria+Hallelujah' rel='stylesheet' type='text/css'>
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<!-- Latest compiled and minified JavaScript -->
@@ -28,13 +31,15 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/funciones.js"></script>
+    <script src="js/bootstrap-switch.js"></script>
 </head>
 <body>
 <div class="container text-center">
 	<div class="row">
-		<h2>Por favor selecciona tu configuracion y da click en guardar</h2>
+		<h2 class="texto_cabeza">Por favor selecciona tu configuracion y da click en guardar</h2>
 	</div>
 	<div class="row">
+		<input type="checkbox" name="my-checkbox" checked>
 		<div class="checkbox">
 		  <label>Compartir Ubicacion <input type="checkbox" value="" id="1"></label>
 		</div>
@@ -48,7 +53,7 @@
 	<div class="row">
 		<div class="col-md-8"></div>
 		<div class="col-md-2">
-			<button type="button" class="btn  btn-lg" id="btn_guardar">Buscar</button>
+			<button type="button" class="btn  btn-lg" id="btn_guardar">Guardar</button>
 		</div>
 	</div>
 </div>
@@ -56,6 +61,12 @@
 </html>
 <script>
 	$(document).ready(function(){
+		$("[name='my-checkbox']").bootstrapSwitch();
+		$('input[name="my-checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
+			console.log(this); // DOM element
+			console.log(event); // jQuery event
+			console.log(state); // true | false
+		});
 		$('#btn_guardar').click(function() {
 			var compartir_ubicacion;
 			var compartit_horario;

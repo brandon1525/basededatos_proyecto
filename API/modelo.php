@@ -144,8 +144,7 @@ class Modelo{
             return false;
         }
     }
-
-    public static function update($id,$ruta,$latitud,$longitud,$velocidad,$en_servicio)
+    public static function update_configbyID($id,$compartir_ubicacion,$compartit_horario,$compartit_profesor)
     {
         $consulta = "UPDATE camion" .
             " SET ruta=?, latitud=?, longitud=?, velocidad=?, en_servicio=? " .
@@ -154,6 +153,7 @@ class Modelo{
         $cmd->execute(array($ruta, $latitud, $longitud, $velocidad, $en_servicio, $id));
         return $cmd;
     }
+
     public static function insert($ruta,$latitud,$longitud,$velocidad,$en_servicio)
     {
         $comando = "INSERT INTO camion ( " .

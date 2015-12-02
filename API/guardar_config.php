@@ -10,7 +10,7 @@ require 'modelo.php';
         $compartir_ubicacion = $_GET['compartir_ubicacion'];
         $compartit_horario = $_GET['compartit_horario'];
         $compartit_profesor = $_GET['compartit_profesor'];
-        $retorno = Modelo::update_configbyID($compartir_ubicacion,$compartit_horario,$compartit_profesor);
+        $retorno = Modelo::update_configbyID($id,$compartir_ubicacion,$compartit_horario,$compartit_profesor);
         if ($retorno) {
             $persona["result"] = "true";
             $persona["horario"] = $retorno;
