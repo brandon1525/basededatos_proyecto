@@ -14,7 +14,7 @@ body{
 	color: #003F3D;
 	font-size: 1.2em;
 }
-#btn_buscar{
+#btn_buscar,#btn_guardar{
 	background-color: #003F3D;
 	color: #fff;
 }

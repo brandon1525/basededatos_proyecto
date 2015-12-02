@@ -144,13 +144,11 @@ class Modelo{
             return false;
         }
     }
-    public static function update_configbyID($id,$compartir_ubicacion,$compartit_horario,$compartit_profesor)
+    public static function update_configbyID($id,$id_configuracion)
     {
-        $consulta = "UPDATE camion" .
-            " SET ruta=?, latitud=?, longitud=?, velocidad=?, en_servicio=? " .
-            "WHERE id=?";
+        $consulta = "UPDATE persona SET ID_CONFIGURACION=? WHERE ID=?";
         $cmd = Database::getInstance()->getDb()->prepare($consulta);
-        $cmd->execute(array($ruta, $latitud, $longitud, $velocidad, $en_servicio, $id));
+        $cmd->execute(array($id_configuracion,$id));
         return $cmd;
     }
 

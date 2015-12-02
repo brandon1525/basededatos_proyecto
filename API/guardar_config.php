@@ -7,19 +7,11 @@ require 'modelo.php';
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $id = $_GET['id'];
-        $compartir_ubicacion = $_GET['compartir_ubicacion'];
-        $compartit_horario = $_GET['compartit_horario'];
-        $compartit_profesor = $_GET['compartit_profesor'];
-        $retorno = Modelo::update_configbyID($id,$compartir_ubicacion,$compartit_horario,$compartit_profesor);
+        $id_configuracion = $_GET['id_configuracion'];
+        $retorno = Modelo::update_configbyID($id,$id_configuracion);
         if ($retorno) {
             $persona["result"] = "true";
-            $persona["horario"] = $retorno;
-            if (array_key_exists('TIPO_PROFESOR', $retorno[0])) {
-                $persona['clases']= Modelo::getClasesByIdForProfesor($id_persona);
-            }else{
-                $persona['clases']= Modelo::getClasesByIdForAlumno($id_persona);
-            }
-            $persona['configuracion']=Modelo::getConfigurationByIdForPerson($id_persona);
+            $persona["exito"] = $retorno;
             echo json_encode($persona);
         } else {
             echo json_encode(
