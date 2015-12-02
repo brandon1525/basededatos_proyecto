@@ -1,9 +1,96 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <link rel="shortcut icon" type="image/x-icon" href="images/place4.ico">
+    <title>Servicio de Ubicación de la Universidad Autónoma de Aguascalientes</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" type="text/css" href="css/estilos.css">
+  <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Gloria+Hallelujah' rel='stylesheet' type='text/css'>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/funciones.js"></script>
 </head>
 <body>
-
+<div class="container text-center">
+	<div class="row">
+		<h2>Por favor selecciona tu configuracion y da click en guardar</h2>
+	</div>
+	<div class="row">
+		<div class="checkbox">
+		  <label>Compartir Ubicacion <input type="checkbox" value="" id="1"></label>
+		</div>
+		<div class="checkbox">
+		  <label>Compartir Horario <input type="checkbox" value="" id="2"></label>
+		</div>
+		<div class="checkbox">
+		  <label>Compartir Profesor <input type="checkbox" value="" id="3"></label>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-8"></div>
+		<div class="col-md-2">
+			<button type="button" class="btn  btn-lg" id="btn_guardar">Buscar</button>
+		</div>
+	</div>
+</div>
 </body>
 </html>
+<script>
+	$(document).ready(function(){
+		$('#btn_guardar').click(function() {
+			var compartir_ubicacion;
+			var compartit_horario;
+			var compartit_profesor;
+			if($("#1").is(':checked')) {  
+            	compartir_ubicacion=1;
+	        } else {  
+	           	compartir_ubicacion=0; 
+	        }
+	        if($("#2").is(':checked')) {  
+            	compartit_horario=1;
+	        } else {  
+	           	compartit_horario=0; 
+	        } 
+	        if($("#3").is(':checked')) {  
+            	compartit_profesor=1;
+	        } else {  
+	           	compartit_profesor=0; 
+	        }
+	        var datos_persona=JSON.parse(localStorage.datos_persona);
+	        console.log(datos_persona);
+	        var id=datos_persona[0].ID;
+	        $.ajax({
+				url: "http://siluaa.mybluemix.net/API/guardar_config.php",
+				method: 'GET',
+				data: {id: id, compartir_ubicacion: compartir_ubicacion, compartit_horario: compartit_horario, compartit_profesor: compartit_profesor},
+				dataType:'json',
+				mimeType: 'application/json'
+			}).done(function(json) {
+				if(json.result=="true"){
+				   	window.location="index.html";
+				}else{
+				   	alert("Algo salió mal");
+				}
+			});
+		});
+	});
+</script>

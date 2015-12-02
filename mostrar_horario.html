@@ -37,11 +37,15 @@
       #calendar {
         max-width: auto;
         max-height: auto;
-        margin: 40px auto;
-        padding: 0 10px;
+        margin-top: 0px;
       }
       #map {
         height: 100%;
+      }
+      .fc-toolbar {
+        text-align: center;
+        margin-bottom: 1em;
+        display: none;
       }
     </style>
   </head>
@@ -102,6 +106,9 @@
           <div id='calendar'></div>
         </div>
       </div>
+      <div class="row">
+        <a href="index.html">Salir</a>
+      </div>
     </div>
   </body>
 </html>
@@ -124,7 +131,8 @@ $(document).ready(function() {
     editable: false,
     defaultView: 'agendaWeek',
     defaultDate: '2015-11-09',
-    lang: 'es' 
+    lang: 'es' ,
+    height: "auto"
   });
   cargar_eventos();
   function cargar_eventos () {
@@ -133,50 +141,223 @@ $(document).ready(function() {
       var eventosFinal =[];
       var configuracion_persona=JSON.parse(localStorage.configuracion_persona);
       //console.log(configuracion_persona);
-      comparte_ubicacion(configuracion_persona[0].COMPARTIR_UBICACION);
-      comparte_profesor(configuracion_persona[0].COMPARTIR_PROFESOR);
-      comparte_horario(configuracion_persona[0].COMPARTIR_HORARIO);
-      
+      var datos=JSON.parse(localStorage.datos_horario);
+      switch(configuracion_persona[0].COMPARTIR_UBICACION+configuracion_persona[0].COMPARTIR_HORARIO+configuracion_persona[0].COMPARTIR_PROFESOR){
+
+        case "000":
+          $('#map').hide();
+          $('#calendar').hide();
+          $('#dato_estado').text((JSON.stringify(datos[0].ESTADO_CAMPUS)).substring(1,(JSON.stringify(datos[0].ESTADO_CAMPUS)).length-1));
+          $('#dato_ciudad').text((JSON.stringify(datos[0].CIUDAD_CAMPUS)).substring(1,(JSON.stringify(datos[0].CIUDAD_CAMPUS)).length-1));
+          $('#dato_campus').text((JSON.stringify(datos[0].NOMBRE_CAMPUS)).substring(1,(JSON.stringify(datos[0].NOMBRE_CAMPUS)).length-1));
+          $('#dato_colonia').text((JSON.stringify(datos[0].COLONIA)).substring(1,(JSON.stringify(datos[0].COLONIA)).length-1));
+          $('#dato_calle').text((JSON.stringify(datos[0].CALLE)).substring(1,(JSON.stringify(datos[0].CALLE)).length-1));
+          $('#dato_noext').text((JSON.stringify(datos[0].NUMERO_EXT)).substring(1,(JSON.stringify(datos[0].NUMERO_EXT)).length-1));
+          $('#dato_latitud').text((JSON.stringify(datos[0].LATITUD)).substring(1,(JSON.stringify(datos[0].LATITUD)).length-1));
+          $('#dato_longitud').text((JSON.stringify(datos[0].LONGITUD)).substring(1,(JSON.stringify(datos[0].LONGITUD)).length-1));
+          $('#dato_nombre').text((JSON.stringify(datos[0].NOMBRE)).substring(1,(JSON.stringify(datos[0].NOMBRE)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOP)).substring(1,(JSON.stringify(datos[0].APELLIDOP)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOM)).substring(1,(JSON.stringify(datos[0].APELLIDOM)).length-1));
+          if(datos[0].SEMESTRE!=null && datos[0].LETRA_GRUPO!=null && datos[0].NOMBRE_CARRERA!=null){
+            $('#dato_syg').text((JSON.stringify(datos[0].SEMESTRE)).substring(1,(JSON.stringify(datos[0].SEMESTRE)).length-1)+"°"+(JSON.stringify(datos[0].LETRA_GRUPO)).substring(1,(JSON.stringify(datos[0].LETRA_GRUPO)).length-1));
+            $('#dato_carrera').text((JSON.stringify(datos[0].NOMBRE_CARRERA)).substring(1,(JSON.stringify(datos[0].NOMBRE_CARRERA)).length-1));
+          }else if(datos[0].TIPO_PROFESOR){
+            $('#dato_syg').hide();
+            $('#dato_carrera').hide();
+            $('.solo_alumno').hide();
+          }
+        break;
+        case "001":
+          $('#map').hide();
+          $('#calendar').hide();
+          $('#dato_estado').text((JSON.stringify(datos[0].ESTADO_CAMPUS)).substring(1,(JSON.stringify(datos[0].ESTADO_CAMPUS)).length-1));
+          $('#dato_ciudad').text((JSON.stringify(datos[0].CIUDAD_CAMPUS)).substring(1,(JSON.stringify(datos[0].CIUDAD_CAMPUS)).length-1));
+          $('#dato_campus').text((JSON.stringify(datos[0].NOMBRE_CAMPUS)).substring(1,(JSON.stringify(datos[0].NOMBRE_CAMPUS)).length-1));
+          $('#dato_colonia').text((JSON.stringify(datos[0].COLONIA)).substring(1,(JSON.stringify(datos[0].COLONIA)).length-1));
+          $('#dato_calle').text((JSON.stringify(datos[0].CALLE)).substring(1,(JSON.stringify(datos[0].CALLE)).length-1));
+          $('#dato_noext').text((JSON.stringify(datos[0].NUMERO_EXT)).substring(1,(JSON.stringify(datos[0].NUMERO_EXT)).length-1));
+          $('#dato_latitud').text((JSON.stringify(datos[0].LATITUD)).substring(1,(JSON.stringify(datos[0].LATITUD)).length-1));
+          $('#dato_longitud').text((JSON.stringify(datos[0].LONGITUD)).substring(1,(JSON.stringify(datos[0].LONGITUD)).length-1));
+          $('#dato_nombre').text((JSON.stringify(datos[0].NOMBRE)).substring(1,(JSON.stringify(datos[0].NOMBRE)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOP)).substring(1,(JSON.stringify(datos[0].APELLIDOP)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOM)).substring(1,(JSON.stringify(datos[0].APELLIDOM)).length-1));
+          if(datos[0].SEMESTRE!=null && datos[0].LETRA_GRUPO!=null && datos[0].NOMBRE_CARRERA!=null){
+            $('#dato_syg').text((JSON.stringify(datos[0].SEMESTRE)).substring(1,(JSON.stringify(datos[0].SEMESTRE)).length-1)+"°"+(JSON.stringify(datos[0].LETRA_GRUPO)).substring(1,(JSON.stringify(datos[0].LETRA_GRUPO)).length-1));
+            $('#dato_carrera').text((JSON.stringify(datos[0].NOMBRE_CARRERA)).substring(1,(JSON.stringify(datos[0].NOMBRE_CARRERA)).length-1));
+          }else if(datos[0].TIPO_PROFESOR){
+            $('#dato_syg').hide();
+            $('#dato_carrera').hide();
+            $('.solo_alumno').hide();
+          }
+        break;
+        case "010":
+          $('#map').hide();
+          comparte_horario();
+          $('#dato_estado').text((JSON.stringify(datos[0].ESTADO_CAMPUS)).substring(1,(JSON.stringify(datos[0].ESTADO_CAMPUS)).length-1));
+          $('#dato_ciudad').text((JSON.stringify(datos[0].CIUDAD_CAMPUS)).substring(1,(JSON.stringify(datos[0].CIUDAD_CAMPUS)).length-1));
+          $('#dato_campus').text((JSON.stringify(datos[0].NOMBRE_CAMPUS)).substring(1,(JSON.stringify(datos[0].NOMBRE_CAMPUS)).length-1));
+          $('#dato_colonia').text((JSON.stringify(datos[0].COLONIA)).substring(1,(JSON.stringify(datos[0].COLONIA)).length-1));
+          $('#dato_calle').text((JSON.stringify(datos[0].CALLE)).substring(1,(JSON.stringify(datos[0].CALLE)).length-1));
+          $('#dato_noext').text((JSON.stringify(datos[0].NUMERO_EXT)).substring(1,(JSON.stringify(datos[0].NUMERO_EXT)).length-1));
+          $('#dato_latitud').text((JSON.stringify(datos[0].LATITUD)).substring(1,(JSON.stringify(datos[0].LATITUD)).length-1));
+          $('#dato_longitud').text((JSON.stringify(datos[0].LONGITUD)).substring(1,(JSON.stringify(datos[0].LONGITUD)).length-1));
+          $('#dato_nombre').text((JSON.stringify(datos[0].NOMBRE)).substring(1,(JSON.stringify(datos[0].NOMBRE)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOP)).substring(1,(JSON.stringify(datos[0].APELLIDOP)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOM)).substring(1,(JSON.stringify(datos[0].APELLIDOM)).length-1));
+          if(datos[0].SEMESTRE!=null && datos[0].LETRA_GRUPO!=null && datos[0].NOMBRE_CARRERA!=null){
+            $('#dato_syg').text((JSON.stringify(datos[0].SEMESTRE)).substring(1,(JSON.stringify(datos[0].SEMESTRE)).length-1)+"°"+(JSON.stringify(datos[0].LETRA_GRUPO)).substring(1,(JSON.stringify(datos[0].LETRA_GRUPO)).length-1));
+            $('#dato_carrera').text((JSON.stringify(datos[0].NOMBRE_CARRERA)).substring(1,(JSON.stringify(datos[0].NOMBRE_CARRERA)).length-1));
+          }else if(datos[0].TIPO_PROFESOR){
+            $('#dato_syg').hide();
+            $('#dato_carrera').hide();
+            $('.solo_alumno').hide();
+          }
+        break;
+        case "011":
+          $('#map').hide();//No comparte ubicacion
+          comparte_horario();//COMPARTE HORARIO
+          $('#dato_estado').text((JSON.stringify(datos[0].ESTADO_CAMPUS)).substring(1,(JSON.stringify(datos[0].ESTADO_CAMPUS)).length-1));
+          $('#dato_ciudad').text((JSON.stringify(datos[0].CIUDAD_CAMPUS)).substring(1,(JSON.stringify(datos[0].CIUDAD_CAMPUS)).length-1));
+          $('#dato_campus').text((JSON.stringify(datos[0].NOMBRE_CAMPUS)).substring(1,(JSON.stringify(datos[0].NOMBRE_CAMPUS)).length-1));
+          $('#dato_colonia').text((JSON.stringify(datos[0].COLONIA)).substring(1,(JSON.stringify(datos[0].COLONIA)).length-1));
+          $('#dato_calle').text((JSON.stringify(datos[0].CALLE)).substring(1,(JSON.stringify(datos[0].CALLE)).length-1));
+          $('#dato_noext').text((JSON.stringify(datos[0].NUMERO_EXT)).substring(1,(JSON.stringify(datos[0].NUMERO_EXT)).length-1));
+          $('#dato_latitud').text((JSON.stringify(datos[0].LATITUD)).substring(1,(JSON.stringify(datos[0].LATITUD)).length-1));
+          $('#dato_longitud').text((JSON.stringify(datos[0].LONGITUD)).substring(1,(JSON.stringify(datos[0].LONGITUD)).length-1));
+          $('#dato_nombre').text((JSON.stringify(datos[0].NOMBRE)).substring(1,(JSON.stringify(datos[0].NOMBRE)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOP)).substring(1,(JSON.stringify(datos[0].APELLIDOP)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOM)).substring(1,(JSON.stringify(datos[0].APELLIDOM)).length-1));
+          if(datos[0].SEMESTRE!=null && datos[0].LETRA_GRUPO!=null && datos[0].NOMBRE_CARRERA!=null){
+            $('#dato_syg').text((JSON.stringify(datos[0].SEMESTRE)).substring(1,(JSON.stringify(datos[0].SEMESTRE)).length-1)+"°"+(JSON.stringify(datos[0].LETRA_GRUPO)).substring(1,(JSON.stringify(datos[0].LETRA_GRUPO)).length-1));
+            $('#dato_carrera').text((JSON.stringify(datos[0].NOMBRE_CARRERA)).substring(1,(JSON.stringify(datos[0].NOMBRE_CARRERA)).length-1));
+          }else if(datos[0].TIPO_PROFESOR){
+            $('#dato_syg').hide();
+            $('#dato_carrera').hide();
+            $('.solo_alumno').hide();
+          }
+        break;
+        case "100":
+          $('#dato_estado').text((JSON.stringify(datos[0].ESTADO_CAMPUS)).substring(1,(JSON.stringify(datos[0].ESTADO_CAMPUS)).length-1));
+          $('#dato_ciudad').text((JSON.stringify(datos[0].CIUDAD_CAMPUS)).substring(1,(JSON.stringify(datos[0].CIUDAD_CAMPUS)).length-1));
+          $('#dato_campus').text((JSON.stringify(datos[0].NOMBRE_CAMPUS)).substring(1,(JSON.stringify(datos[0].NOMBRE_CAMPUS)).length-1));
+          $('#dato_colonia').text((JSON.stringify(datos[0].COLONIA)).substring(1,(JSON.stringify(datos[0].COLONIA)).length-1));
+          $('#dato_calle').text((JSON.stringify(datos[0].CALLE)).substring(1,(JSON.stringify(datos[0].CALLE)).length-1));
+          $('#dato_noext').text((JSON.stringify(datos[0].NUMERO_EXT)).substring(1,(JSON.stringify(datos[0].NUMERO_EXT)).length-1));
+          $('#dato_latitud').text((JSON.stringify(datos[0].LATITUD)).substring(1,(JSON.stringify(datos[0].LATITUD)).length-1));
+          $('#dato_longitud').text((JSON.stringify(datos[0].LONGITUD)).substring(1,(JSON.stringify(datos[0].LONGITUD)).length-1));
+          $('#dato_nombre').text((JSON.stringify(datos[0].NOMBRE)).substring(1,(JSON.stringify(datos[0].NOMBRE)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOP)).substring(1,(JSON.stringify(datos[0].APELLIDOP)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOM)).substring(1,(JSON.stringify(datos[0].APELLIDOM)).length-1));
+          if(datos[0].SEMESTRE!=null && datos[0].LETRA_GRUPO!=null && datos[0].NOMBRE_CARRERA!=null){
+            $('#dato_syg').text((JSON.stringify(datos[0].SEMESTRE)).substring(1,(JSON.stringify(datos[0].SEMESTRE)).length-1)+"°"+(JSON.stringify(datos[0].LETRA_GRUPO)).substring(1,(JSON.stringify(datos[0].LETRA_GRUPO)).length-1));
+            $('#dato_carrera').text((JSON.stringify(datos[0].NOMBRE_CARRERA)).substring(1,(JSON.stringify(datos[0].NOMBRE_CARRERA)).length-1));
+          }else if(datos[0].TIPO_PROFESOR){
+            $('#dato_syg').hide();
+            $('#dato_carrera').hide();
+            $('.solo_alumno').hide();
+          }
+        break;
+        case "101":
+          $('#calendar').hide();
+          $('#dato_estado').text((JSON.stringify(datos[0].ESTADO_CAMPUS)).substring(1,(JSON.stringify(datos[0].ESTADO_CAMPUS)).length-1));
+          $('#dato_ciudad').text((JSON.stringify(datos[0].CIUDAD_CAMPUS)).substring(1,(JSON.stringify(datos[0].CIUDAD_CAMPUS)).length-1));
+          $('#dato_campus').text((JSON.stringify(datos[0].NOMBRE_CAMPUS)).substring(1,(JSON.stringify(datos[0].NOMBRE_CAMPUS)).length-1));
+          $('#dato_colonia').text((JSON.stringify(datos[0].COLONIA)).substring(1,(JSON.stringify(datos[0].COLONIA)).length-1));
+          $('#dato_calle').text((JSON.stringify(datos[0].CALLE)).substring(1,(JSON.stringify(datos[0].CALLE)).length-1));
+          $('#dato_noext').text((JSON.stringify(datos[0].NUMERO_EXT)).substring(1,(JSON.stringify(datos[0].NUMERO_EXT)).length-1));
+          $('#dato_latitud').text((JSON.stringify(datos[0].LATITUD)).substring(1,(JSON.stringify(datos[0].LATITUD)).length-1));
+          $('#dato_longitud').text((JSON.stringify(datos[0].LONGITUD)).substring(1,(JSON.stringify(datos[0].LONGITUD)).length-1));
+          $('#dato_nombre').text((JSON.stringify(datos[0].NOMBRE)).substring(1,(JSON.stringify(datos[0].NOMBRE)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOP)).substring(1,(JSON.stringify(datos[0].APELLIDOP)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOM)).substring(1,(JSON.stringify(datos[0].APELLIDOM)).length-1));
+          if(datos[0].SEMESTRE!=null && datos[0].LETRA_GRUPO!=null && datos[0].NOMBRE_CARRERA!=null){
+            $('#dato_syg').text((JSON.stringify(datos[0].SEMESTRE)).substring(1,(JSON.stringify(datos[0].SEMESTRE)).length-1)+"°"+(JSON.stringify(datos[0].LETRA_GRUPO)).substring(1,(JSON.stringify(datos[0].LETRA_GRUPO)).length-1));
+            $('#dato_carrera').text((JSON.stringify(datos[0].NOMBRE_CARRERA)).substring(1,(JSON.stringify(datos[0].NOMBRE_CARRERA)).length-1));
+          }else if(datos[0].TIPO_PROFESOR){
+            $('#dato_syg').hide();
+            $('#dato_carrera').hide();
+            $('.solo_alumno').hide();
+          }
+        break;
+        case "110":
+          comparte_horario();
+          $('#dato_estado').text((JSON.stringify(datos[0].ESTADO_CAMPUS)).substring(1,(JSON.stringify(datos[0].ESTADO_CAMPUS)).length-1));
+          $('#dato_ciudad').text((JSON.stringify(datos[0].CIUDAD_CAMPUS)).substring(1,(JSON.stringify(datos[0].CIUDAD_CAMPUS)).length-1));
+          $('#dato_campus').text((JSON.stringify(datos[0].NOMBRE_CAMPUS)).substring(1,(JSON.stringify(datos[0].NOMBRE_CAMPUS)).length-1));
+          $('#dato_colonia').text((JSON.stringify(datos[0].COLONIA)).substring(1,(JSON.stringify(datos[0].COLONIA)).length-1));
+          $('#dato_calle').text((JSON.stringify(datos[0].CALLE)).substring(1,(JSON.stringify(datos[0].CALLE)).length-1));
+          $('#dato_noext').text((JSON.stringify(datos[0].NUMERO_EXT)).substring(1,(JSON.stringify(datos[0].NUMERO_EXT)).length-1));
+          $('#dato_latitud').text((JSON.stringify(datos[0].LATITUD)).substring(1,(JSON.stringify(datos[0].LATITUD)).length-1));
+          $('#dato_longitud').text((JSON.stringify(datos[0].LONGITUD)).substring(1,(JSON.stringify(datos[0].LONGITUD)).length-1));
+          $('#dato_nombre').text((JSON.stringify(datos[0].NOMBRE)).substring(1,(JSON.stringify(datos[0].NOMBRE)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOP)).substring(1,(JSON.stringify(datos[0].APELLIDOP)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOM)).substring(1,(JSON.stringify(datos[0].APELLIDOM)).length-1));
+          if(datos[0].SEMESTRE!=null && datos[0].LETRA_GRUPO!=null && datos[0].NOMBRE_CARRERA!=null){
+            $('#dato_syg').text((JSON.stringify(datos[0].SEMESTRE)).substring(1,(JSON.stringify(datos[0].SEMESTRE)).length-1)+"°"+(JSON.stringify(datos[0].LETRA_GRUPO)).substring(1,(JSON.stringify(datos[0].LETRA_GRUPO)).length-1));
+            $('#dato_carrera').text((JSON.stringify(datos[0].NOMBRE_CARRERA)).substring(1,(JSON.stringify(datos[0].NOMBRE_CARRERA)).length-1));
+          }else if(datos[0].TIPO_PROFESOR){
+            $('#dato_syg').hide();
+            $('#dato_carrera').hide();
+            $('.solo_alumno').hide();
+          }
+        break
+        case "111":
+        comparte_horario();
+          $('#dato_estado').text((JSON.stringify(datos[0].ESTADO_CAMPUS)).substring(1,(JSON.stringify(datos[0].ESTADO_CAMPUS)).length-1));
+          $('#dato_ciudad').text((JSON.stringify(datos[0].CIUDAD_CAMPUS)).substring(1,(JSON.stringify(datos[0].CIUDAD_CAMPUS)).length-1));
+          $('#dato_campus').text((JSON.stringify(datos[0].NOMBRE_CAMPUS)).substring(1,(JSON.stringify(datos[0].NOMBRE_CAMPUS)).length-1));
+          $('#dato_colonia').text((JSON.stringify(datos[0].COLONIA)).substring(1,(JSON.stringify(datos[0].COLONIA)).length-1));
+          $('#dato_calle').text((JSON.stringify(datos[0].CALLE)).substring(1,(JSON.stringify(datos[0].CALLE)).length-1));
+          $('#dato_noext').text((JSON.stringify(datos[0].NUMERO_EXT)).substring(1,(JSON.stringify(datos[0].NUMERO_EXT)).length-1));
+          $('#dato_latitud').text((JSON.stringify(datos[0].LATITUD)).substring(1,(JSON.stringify(datos[0].LATITUD)).length-1));
+          $('#dato_longitud').text((JSON.stringify(datos[0].LONGITUD)).substring(1,(JSON.stringify(datos[0].LONGITUD)).length-1));
+          $('#dato_nombre').text((JSON.stringify(datos[0].NOMBRE)).substring(1,(JSON.stringify(datos[0].NOMBRE)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOP)).substring(1,(JSON.stringify(datos[0].APELLIDOP)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOM)).substring(1,(JSON.stringify(datos[0].APELLIDOM)).length-1));
+          if(datos[0].SEMESTRE!=null && datos[0].LETRA_GRUPO!=null && datos[0].NOMBRE_CARRERA!=null){
+            $('#dato_syg').text((JSON.stringify(datos[0].SEMESTRE)).substring(1,(JSON.stringify(datos[0].SEMESTRE)).length-1)+"°"+(JSON.stringify(datos[0].LETRA_GRUPO)).substring(1,(JSON.stringify(datos[0].LETRA_GRUPO)).length-1));
+            $('#dato_carrera').text((JSON.stringify(datos[0].NOMBRE_CARRERA)).substring(1,(JSON.stringify(datos[0].NOMBRE_CARRERA)).length-1));
+          }else if(datos[0].TIPO_PROFESOR){
+            $('#dato_syg').hide();
+            $('#dato_carrera').hide();
+            $('.solo_alumno').hide();
+          }
+        break;
+      }
     }else{
       alert("no has ingresado correctamente");
       window.location="index.html";
     }
   }
-  function comparte_ubicacion (argument) {
-    var datos = JSON.parse(localStorage.datos_horario);
-   if (argument=="1") {
-    $('#dato_estado').text((JSON.stringify(datos[0].ESTADO_CAMPUS)).substring(1,(JSON.stringify(datos[0].ESTADO_CAMPUS)).length-1));
-    $('#dato_ciudad').text((JSON.stringify(datos[0].CIUDAD_CAMPUS)).substring(1,(JSON.stringify(datos[0].CIUDAD_CAMPUS)).length-1));
-    $('#dato_campus').text((JSON.stringify(datos[0].NOMBRE_CAMPUS)).substring(1,(JSON.stringify(datos[0].NOMBRE_CAMPUS)).length-1));
-    $('#dato_colonia').text((JSON.stringify(datos[0].COLONIA)).substring(1,(JSON.stringify(datos[0].COLONIA)).length-1));
-    $('#dato_calle').text((JSON.stringify(datos[0].CALLE)).substring(1,(JSON.stringify(datos[0].CALLE)).length-1));
-    $('#dato_noext').text((JSON.stringify(datos[0].NUMERO_EXT)).substring(1,(JSON.stringify(datos[0].NUMERO_EXT)).length-1));
-    $('#dato_latitud').text((JSON.stringify(datos[0].LATITUD)).substring(1,(JSON.stringify(datos[0].LATITUD)).length-1));
-    $('#dato_longitud').text((JSON.stringify(datos[0].LONGITUD)).substring(1,(JSON.stringify(datos[0].LONGITUD)).length-1));
-    $('#dato_nombre').text((JSON.stringify(datos[0].NOMBRE)).substring(1,(JSON.stringify(datos[0].NOMBRE)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOP)).substring(1,(JSON.stringify(datos[0].APELLIDOP)).length-1)+" "+(JSON.stringify(datos[0].APELLIDOM)).substring(1,(JSON.stringify(datos[0].APELLIDOM)).length-1));
-    if(datos[0].SEMESTRE!=null && datos[0].LETRA_GRUPO!=null && datos[0].NOMBRE_CARRERA!=null){
-      $('#dato_syg').text((JSON.stringify(datos[0].SEMESTRE)).substring(1,(JSON.stringify(datos[0].SEMESTRE)).length-1)+"°"+(JSON.stringify(datos[0].LETRA_GRUPO)).substring(1,(JSON.stringify(datos[0].LETRA_GRUPO)).length-1));
-      $('#dato_carrera').text((JSON.stringify(datos[0].NOMBRE_CARRERA)).substring(1,(JSON.stringify(datos[0].NOMBRE_CARRERA)).length-1));
-    }else if(datos[0].TIPO_PROFESOR){
-      $('#dato_syg').hide();
-      $('#dato_carrera').hide();
-      $('.solo_alumno').hide();
-    }
-   }else if(argument=="0"){
-    alert("No comparte ubicacion");
-    $('#map').hide();
-   }
-  }
-  function comparte_horario (argument) {
+  function comparte_horario () {
     var clases = JSON.parse(localStorage.horario_persona);
     var datus=[];
-    if(argument=="1"){
+    console.log(clases.length);
+    if(clases.length==5){
+      $.each(clases, function(i, item) {
+      var dia = item.DIA;
+      var hora_inicio=item.HORA_INICIO;
+      var hora_fin=item.HORA_FIN;
+      console.log(dia);
+      console.log(hora_inicio);
+      console.log(hora_fin);
+      var titulo = "Materia "+item.NOMBRE_MATERIA+" en el edificio "+item.ID_EDIFICIO;
+          datus.push({
+            title: titulo, 
+            start: "2015-11-09T"+hora_inicio, 
+            end: "2015-11-09T"+hora_fin
+          });
+          datus.push({
+            title: titulo, 
+            start: "2015-11-10T"+hora_inicio, 
+            end: "2015-11-10T"+hora_fin
+          });
+          datus.push({
+            title: titulo, 
+            start: "2015-11-11T"+hora_inicio, 
+            end: "2015-11-11T"+hora_fin
+          });
+          datus.push({
+            title: titulo, 
+            start: "2015-11-12T"+hora_inicio, 
+            end: "2015-11-12T"+hora_fin
+          });
+          datus.push({
+            title: titulo, 
+            start: "2015-11-13T"+hora_inicio, 
+            end: "2015-11-13T"+hora_fin
+          });
+      });
+    }else{
       $.each(clases, function(i, item) {
         var dia = item.DIA;
         var hora_inicio=item.HORA_INICIO;
         var hora_fin=item.HORA_FIN;
-        var titulo = "Materia "+item.ID_MATERIA+" en el edificio "+item.ID_EDIFICIO+" con el profesor "+item.ID_PROFESOR;
-        console.log(dia);
+        var titulo = "Materia "+item.NOMBRE_MATERIA+" en el edificio "+item.ID_EDIFICIO+" con el profesor "+item.NOMBRE_PROFESOR+" "+item.APELLIDOP_PROFESOR+" "+item.APELLIDOM_PROFESOR;
         switch(dia){
           case "1":
             datus.push({
@@ -190,21 +371,20 @@ $(document).ready(function() {
               title: titulo,
               start: "2015-11-10T"+hora_inicio,
               end: "2015-11-10T"+hora_fin
-            
             });
           break;
           case "3":
             datus.push({
-            
+              
               title: titulo, 
               start: "2015-11-11T"+hora_inicio, 
               end: "2015-11-11T"+hora_fin
-            
+              
             });
           break;
           case "4":
             datus.push({
-            
+              
               title: titulo, 
               start: "2015-11-12T"+hora_inicio, 
               end: "2015-11-12T"+hora_fin
@@ -220,123 +400,14 @@ $(document).ready(function() {
           break;
         }
       });
-      $('#calendar').fullCalendar( 'addEventSource', datus );
-    }else if(argument="0"){
-      alert("no comparte horario");
-      $('#calendar').hide();
     }
-  }
-  function comparte_profesor (argument) {
-    var clases = JSON.parse(localStorage.horario_persona);
-    var datus=[];
-    if(argument=="1"){
-      $.each(clases, function(i, item) {
-        var dia = item.DIA;
-        var hora_inicio=item.HORA_INICIO;
-        var hora_fin=item.HORA_FIN;
-        var titulo = "Materia "+item.ID_MATERIA+" en el edificio "+item.ID_EDIFICIO+" con el profesor "+item.ID_PROFESOR;
-        console.log(dia);
-        switch(dia){
-          case "1":
-            datus.push({
-              title: titulo, 
-              start: "2015-11-09T"+hora_inicio, 
-              end: "2015-11-09T"+hora_fin
-            });
-          break;
-          case "2":
-            datus.push({
-              title: titulo,
-              start: "2015-11-10T"+hora_inicio,
-              end: "2015-11-10T"+hora_fin
-            
-            });
-          break;
-          case "3":
-            datus.push({
-            
-              title: titulo, 
-              start: "2015-11-11T"+hora_inicio, 
-              end: "2015-11-11T"+hora_fin
-            
-            });
-          break;
-          case "4":
-            datus.push({
-            
-              title: titulo, 
-              start: "2015-11-12T"+hora_inicio, 
-              end: "2015-11-12T"+hora_fin
-
-            });
-          break;
-          case "5":
-            datus.push({
-              title: titulo, 
-              start: "2015-11-13T"+hora_inicio, 
-              end: "2015-11-13T"+hora_fin
-            });
-          break;
-        }
-      });
-      $('#calendar').fullCalendar( 'addEventSource', datus );
-    }else if(argument=="0"){
-      $.each(clases, function(i, item) {
-        var dia = item.DIA;
-        var hora_inicio=item.HORA_INICIO;
-        var hora_fin=item.HORA_FIN;
-        var titulo = "Materia "+item.ID_MATERIA+" en el edificio "+item.ID_EDIFICIO;
-        console.log(dia);
-        switch(dia){
-          case "1":
-            datus.push({
-              title: titulo, 
-              start: "2015-11-09T"+hora_inicio, 
-              end: "2015-11-09T"+hora_fin
-            });
-          break;
-          case "2":
-            datus.push({
-              title: titulo,
-              start: "2015-11-10T"+hora_inicio,
-              end: "2015-11-10T"+hora_fin
-            
-            });
-          break;
-          case "3":
-            datus.push({
-            
-              title: titulo, 
-              start: "2015-11-11T"+hora_inicio, 
-              end: "2015-11-11T"+hora_fin
-            
-            });
-          break;
-          case "4":
-            datus.push({
-            
-              title: titulo, 
-              start: "2015-11-12T"+hora_inicio, 
-              end: "2015-11-12T"+hora_fin
-
-            });
-          break;
-          case "5":
-            datus.push({
-              title: titulo, 
-              start: "2015-11-13T"+hora_inicio, 
-              end: "2015-11-13T"+hora_fin
-            });
-          break;
-        }
-      });
       $('#calendar').fullCalendar( 'addEventSource', datus );
     }
-  }
+ 
 });
 function initMap() {
 
-  var myLatLng = {lat: 21.96932, lng: -102.37457};
+  var myLatLng = {lat: parseFloat($('#dato_latitud').text()), lng: parseFloat($('#dato_longitud').text())};
 
 
   var map = new google.maps.Map(document.getElementById('map'), {

@@ -15,20 +15,28 @@ $(document).ready(function(){
           mimeType: 'application/json'
         }).done(function(json){
           if(json.result=="true"){
-            window.location="configuracion.html";
+            if(json.datos[0].ID==id && json.datos[0].CONTRA==contra){
+              localStorage.setItem("datos_persona", JSON.stringify(json.datos));
+              window.location="configuracion.html";
+            }else{
+              alert("Usuario y contraseña no válidos");
+              $('#ID').text("");
+              $('#contra').text("");
+            }
           }else{
-            alert("algo salio mal");
+            alert(json.mensaje);
           }
         });
       }
   });
 });
+
 $(document).mousemove(function(e){
-     TweenLite.to($('body'), 
-        .5, 
-        { css: 
-            {
-                backgroundPosition: ""+ parseInt(event.pageX/8) + "px "+parseInt(event.pageY/'12')+"px, "+parseInt(event.pageX/'15')+"px "+parseInt(event.pageY/'15')+"px, "+parseInt(event.pageX/'30')+"px "+parseInt(event.pageY/'30')+"px"
-            }
-        });
-  });
+  TweenLite.to($('body'),
+    .5, 
+    { css: 
+      {
+        backgroundPosition: ""+ parseInt(event.pageX/8) + "px "+parseInt(event.pageY/'12')+"px, "+parseInt(event.pageX/'15')+"px "+parseInt(event.pageY/'15')+"px, "+parseInt(event.pageX/'30')+"px "+parseInt(event.pageY/'30')+"px"
+      }
+    });
+});
