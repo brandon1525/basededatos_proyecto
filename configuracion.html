@@ -96,24 +96,28 @@
 			var compartit_horario;
 			var compartit_profesor;
 			if($("#1").is(':checked')) {
-            	compartir_ubicacion=1;
+            	compartir_ubicacion="1";
 	        } else {  
-	           	compartir_ubicacion=0; 
+	           	compartir_ubicacion="0"; 
 	        }
 	        if($("#2").is(':checked')) {
-            	compartit_horario=1;
+            	compartit_horario="1";
 	        } else {  
-	           	compartit_horario=0; 
+	           	compartit_horario="0"; 
 	        } 
 	        if($("#3").is(':checked')) {
-            	compartit_profesor=1;
+            	compartit_profesor="1";
 	        } else {  
-	           	compartit_profesor=0; 
+	           	compartit_profesor="0"; 
 	        }
 	        var datos_persona=JSON.parse(localStorage.datos_persona);
 	        console.log(datos_persona);
 	        var id=datos_persona[0].ID;
 	        var id_configuracion=compartir_ubicacion+compartit_horario+compartit_profesor;
+	        alert(id_configuracion);
+	        console.log(compartir_ubicacion);
+			console.log(compartir_ubicacion);
+			console.log(compartit_profesor);
 	        switch(id_configuracion){
 	        	case "000":
 	        		id_configuracion=8;

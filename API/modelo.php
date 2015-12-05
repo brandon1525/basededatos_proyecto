@@ -146,11 +146,17 @@ class Modelo{
     }
     public static function update_configbyID($id,$id_configuracion)
     {
-        $consulta = "UPDATE persona SET ID_CONFIGURACION=? WHERE ID=?";
-        $cmd = Database::getInstance()->getDb()->prepare($consulta);
-        $cmd->execute(array($id_configuracion,$id));
-        return $cmd;
+        try{
+            $consulta = "UPDATE persona SET ID_CONFIGURACION=? WHERE ID=?";
+            $cmd = Database::getInstance()->getDb()->prepare($consulta);
+            $cmd->execute(array($id_configuracion,$id));
+            return $cmd;   
+        }catch(PDOException $e){
+            return false;
+        }
+        
     }
+
 
     public static function insert($ruta,$latitud,$longitud,$velocidad,$en_servicio)
     {
