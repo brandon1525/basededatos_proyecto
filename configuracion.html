@@ -19,9 +19,9 @@
   	<link rel="stylesheet" type="text/css" href="css/estilos.css">
   	<link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
   	<link href='https://fonts.googleapis.com/css?family=Gloria+Hallelujah' rel='stylesheet' type='text/css'>
-  	<link rel="stylesheet" type="text/css" href="css/bootstrap-switch.css">
   	<link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
   	<link href='https://fonts.googleapis.com/css?family=Gloria+Hallelujah' rel='stylesheet' type='text/css'>
+  	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.0/css/bootstrap-toggle.min.css" rel="stylesheet">
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<!-- Latest compiled and minified JavaScript -->
@@ -30,7 +30,7 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/funciones.js"></script>
-    <script src="js/bootstrap-switch.js"></script>
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.0/js/bootstrap-toggle.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -78,46 +78,54 @@
 </html>
 <script>
 	$(document).ready(function(){
-		var configuracion_persona=JSON.parse(localStorage.configuracion_persona);
-	    console.log(configuracion_persona);
-	    var todo= configuracion_persona[0].COMPARTIR_UBICACION + configuracion_persona[0].COMPARTIR_HORARIO+configuracion_persona[0].COMPARTIR_PROFESOR;
-	    if(configuracion_persona[0].COMPARTIR_UBICACION=="1"){
-	    	$('#1').prop('checked', true);
-	    }
-	    if(configuracion_persona[0].COMPARTIR_HORARIO=="1"){
-	    	$('#2').prop('checked', true);
-	    }
-	    if(configuracion_persona[0].COMPARTIR_PROFESOR=="1"){
-	    	$('#3').prop('checked', true);
-	    }
 		$("[name='my-checkbox']").bootstrapSwitch();
+		var configuracion_persona=JSON.parse(localStorage.configuracion_persona);
+	    console.log(configuracion_persona[0]);
+	    console.log(configuracion_persona[0].COMPARTIR_UBICACION);
+	    console.log(configuracion_persona[0].COMPARTIR_HORARIO);
+	    console.log(configuracion_persona[0].COMPARTIR_PROFESOR);
+	    if(configuracion_persona[0].COMPARTIR_UBICACION=="1" || configuracion_persona[0].COMPARTIR_UBICACION==1){
+	    	$('#1').bootstrapSwitch('state', true);
+	    }else{
+	    	$('#1').bootstrapSwitch('state', false);
+	    }
+	    if(configuracion_persona[0].COMPARTIR_HORARIO=="1" || configuracion_persona[0].COMPARTIR_HORARIO==1){
+	    	$('#2').bootstrapSwitch('state', true);
+	    }else{
+	    	$('#2').bootstrapSwitch('state', false);
+	    }
+	    if(configuracion_persona[0].COMPARTIR_PROFESOR=="1" || configuracion_persona[0].COMPARTIR_PROFESOR==1){
+	    	$('#3').bootstrapSwitch('state', true);
+	    }else{
+	    	$('#3').bootstrapSwitch('state', false);
+	    }
 		$('#btn_guardar').click(function() {
 			var compartir_ubicacion;
-			var compartit_horario;
-			var compartit_profesor;
-			if($("#1").is(':checked')) {
+			var compartir_horario;
+			var compartir_profesor;
+			if($('#1').bootstrapSwitch('state')) {
             	compartir_ubicacion="1";
 	        } else {  
 	           	compartir_ubicacion="0"; 
 	        }
-	        if($("#2").is(':checked')) {
-            	compartit_horario="1";
+	        if($('#2').bootstrapSwitch('state')) {
+            	compartir_horario="1";
 	        } else {  
-	           	compartit_horario="0"; 
+	           	compartir_horario="0"; 
 	        } 
-	        if($("#3").is(':checked')) {
-            	compartit_profesor="1";
+	        if($('#3').bootstrapSwitch('state')) {
+            	compartir_profesor="1";
 	        } else {  
-	           	compartit_profesor="0"; 
+	           	compartir_profesor="0"; 
 	        }
 	        var datos_persona=JSON.parse(localStorage.datos_persona);
 	        console.log(datos_persona);
 	        var id=datos_persona[0].ID;
-	        var id_configuracion=compartir_ubicacion+compartit_horario+compartit_profesor;
+	        var id_configuracion=compartir_ubicacion+compartir_horario+compartir_profesor;
 	        alert(id_configuracion);
 	        console.log(compartir_ubicacion);
 			console.log(compartir_ubicacion);
-			console.log(compartit_profesor);
+			console.log(compartir_profesor);
 	        switch(id_configuracion){
 	        	case "000":
 	        		id_configuracion=8;
@@ -154,7 +162,7 @@
 			}).done(function(json) {
 				if(json.result=="true"){
 					alert("exito");
-				   	window.location="index.html";
+				   	window.location="log-in.html";
 				}else{
 				   	alert("Algo salió mal");
 				}
