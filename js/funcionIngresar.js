@@ -18,7 +18,11 @@ $(document).ready(function(){
             if(json.datos[0].ID==id && json.datos[0].CONTRA==contra){
               localStorage.setItem("datos_persona", JSON.stringify(json.datos));
               localStorage.setItem("configuracion_persona", JSON.stringify(json.configuracion_persona));
-              window.location="configuracion.html";
+              if(id==1){
+                window.location="configuracion_maestro.html"
+              }else{
+                window.location="configuracion.html";
+              }
             }else{
               alert("Usuario y contraseña no válidos");
               $('#ID').text("");

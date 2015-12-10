@@ -173,63 +173,43 @@ class Modelo{
         
     }
 
-
-    public static function insert($ruta,$latitud,$longitud,$velocidad,$en_servicio)
+    public static function deleteFormularioByFechas($rango_inf,$rango_sup)
     {
-        $comando = "INSERT INTO camion ( " .
-            "ruta," .
-            " latitud," .
-            " longitud," .
-            " velocidad," .
-            " en_servicio)" .
-            " VALUES(?,?,?,?,?)";
-        $sentencia = Database::getInstance()->getDb()->prepare($comando);
-        return $sentencia->execute(
-            array(
-                $ruta,
-                $latitud,
-                $longitud,
-                $velocidad,
-                $en_servicio
-            )
-        );
-
-    }
-
-    public static function delete($id)
-    {
-        // Sentencia DELETE
-        $comando = "DELETE FROM camion WHERE id=?";
-
-        // Preparar la sentencia
+        $comando = "DELETE FROM formulario WHERE FECHA_CONSULTA BETWEEN '" . $rango_inf . "' AND '" . $rango_sup ."'";
         $sentencia = Database::getInstance()->getDb()->prepare($comando);
 
-        return $sentencia->execute(array($id));
+        return $sentencia->execute();
     }
-
-    public static function getByRuta($ruta)
+    public static function Obtener_estadictics()
     {
-
-        $consulta = "SELECT id,
-                            ruta,
-                            latitud,
-                            longitud,
-                            velocidad,
-                            en_servicio
-                             FROM camion
-                             WHERE ruta = ?";
-
-        try {
-            $comando = Database::getInstance()->getDb()->prepare($consulta);
-            $comando->execute(array($ruta));
-            $row = $comando->fetch(PDO::FETCH_ASSOC);
-            return $row;
-
-        } catch (PDOException $e) {
-            return -1;
-        }
+        $comando = "select count(FECHA_CONSULTA) AS VECES, FECHA_CONSULTA from formulario group by FECHA_CONSULTA";
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        $sentencia->execute();
+        $rows = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+        return $rows;
     }
-
+    public static function Obtener_most()
+    {
+        $comando = "SELECT MAX(VECES) AS VECES, ID_PERSONA FROM (select count(ID_PERSONA) AS VECES, ID_PERSONA from formulario group by ID_PERSONA order by veces desc) AS T1";
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        $sentencia->execute();
+        $rows = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+        return $rows;
+    }
+    public static function Hora_concurrida(){
+        $comando = "SELECT MAX(VECES) AS MAXIMO, HORA from ( SELECT count(HOUR(HORA_CONSULTA)) AS VECES, HOUR(HORA_CONSULTA) AS HORA from formulario group by HOUR(HORA_CONSULTA) order by VECES desc) as t1";
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        $sentencia->execute();
+        $rows = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+        return $rows;
+    }
+    public static function Hora_grafica(){
+        $comando = "SELECT count(HOUR(HORA_CONSULTA)) AS VECES, HOUR(HORA_CONSULTA) AS HORA from formulario group by HOUR(HORA_CONSULTA) order by veces DESC;";
+        $sentencia = Database::getInstance()->getDb()->prepare($comando);
+        $sentencia->execute();
+        $rows = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+        return $rows;
+    }
 }
 
 ?>

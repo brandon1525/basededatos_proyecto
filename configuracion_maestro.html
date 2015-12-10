@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <link rel="shortcut icon" type="image/x-icon" href="images/place4.ico">
+    <title>Sistema de Localización de la Universidad Autónoma de Aguascalientes</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+  	<link rel="stylesheet" type="text/css" href="css/estilos.css">
+  	<link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+  	<link href='https://fonts.googleapis.com/css?family=Gloria+Hallelujah' rel='stylesheet' type='text/css'>
+  	<link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+  	<link href='https://fonts.googleapis.com/css?family=Gloria+Hallelujah' rel='stylesheet' type='text/css'>
+  	<link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.css">
+  	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/funciones.js"></script>
+    <script src="js/moment-with-locales.js"></script>
+    <script src="js/bootstrap-datetimepicker.js"></script>
+</head>
+<body>
+<div class="container">
+	<p></p>
+	<div class="row">
+		<div class="col-xs-11"></div>
+		<div class="col-xs-1">
+			<button type="button" class="btn btn-lg" id="btn_salir">Salir</button>
+		</div>
+	</div>
+	<div class="row">
+		<h2 id="texto_cabeza" class="text-center">Bienvenido al panel de administración</h2>
+	</div>
+	<div class="row">
+		<div class="col-xs-2"></div>
+		<div class="col-xs-4">
+			<h4 id="text-ingresa-datos" class="text-center">Por favor seleccona la fecha desde la cual se borrarán los registros de búsqueda</h4>
+		</div>
+		<div class="col-xs-4">
+			<h4 id="text-ingresa-datos" class="text-center">Por favor seleccona la fecha hasta donde se borrarán los registros de búsqueda</h4>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-2"></div>
+	    <div class='col-xs-4'>
+	        <div class="form-group">
+	            <div class='input-group date' id='datetimepicker6'>
+	                <input type='text' class="form-control" id="dato1">
+	                <span class="input-group-addon">
+	                    <span class="glyphicon glyphicon-calendar"></span>
+	                </span>
+	            </div>
+	        </div>
+	    </div>
+	    <div class='col-xs-4'>
+	        <div class="form-group">
+	            <div class='input-group date' id='datetimepicker7'>
+	                <input type='text' class="form-control" id="dato2">
+	                <span class="input-group-addon">
+	                    <span class="glyphicon glyphicon-calendar"></span>
+	                </span>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	<div class="row">
+		<div class="col-xs-10"></div>
+		<div class="col-xs-2">
+			<button type="button" class="btn btn-lg" id="btn_eliminar_rangos">Eliminar</button>
+		</div>
+	</div>
+	<p></p>
+	<div class="row">
+		<div class="col-xs-4"></div>
+		<div class="col-xs-4 text-center">
+			<button type="button" class="btn btn-lg" data-toggle="collapse" data-target="#estadisticas" id="btn_estadisticas">Mostrar Estadisticas</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-2"></div>
+		<div class="col-xs-8">
+			<div id="estadisticas" class="collapse">
+				<div class="form-group">
+				    <label for="user_most_wanted">Usuario mas buscado</label>
+				    <label class="form-control" id="user_most_wanted"></label>
+				</div>
+				<div class="form-group">
+					<label for="most_trafico">Hora mas trafico de búsqueda</label>
+				    <label class="form-control" id="most_trafico"></label>
+				</div>
+  			</div>
+  			<label id="lmyfirstchart" value='hide/show'>Frecuencia de busqueda por dias</label>
+  			<div id="myfirstchart" style="height: 350px;" value='hide/show'></div>
+  			<p></p>
+  			<label id="lmy2chart" value='hide/show'>Frecuencia de busqueda por hora</label>
+  			<div id="my2chart" style="height: 350px;" value='hide/show'></div>
+		</div>
+	</div>
+	<p></p>
+	<div class="row">
+		<div class="col-xs-4"></div>
+		<div class="col-xs-4 text-center">
+			<button type="button" class="btn btn-lg" data-toggle="collapse" data-target="#cambio_contra" id="btn_olvido">Olvido de contraseña</button>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-2"></div>
+		<div class="col-xs-8">
+			<div id="cambio_contra" class="collapse">
+				<div class="form-group">
+				    <label for="id">Id persona</label>
+				    <input type="text" class="form-control" id="id" placeholder="Id persona">
+				</div>
+				<div class="form-group">
+				    <label for="new1">Contraseña</label>
+				    <input type="password" class="form-control" id="new1" placeholder="Contraseña">
+				</div>
+				<div class="form-group">
+				    <label for="new2">Repetir contraseña</label>
+				    <input type="password" class="form-control" id="new2" placeholder="Repetir Contraseña">
+				</div>
+				<div class="row">
+					<div class="col-xs-10"></div>
+					<div class="col-xs-2">
+						<button type="button" class="btn btn-lg" id="btn_cambiar_con">Cambiar</button>
+					</div>
+				</div>
+  			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
+<script>
+    $(function () {
+    	$.ajax({        
+			url: "http://siluaa.mybluemix.net/API/most_wanted.php",
+			method: 'GET',
+			dataType:'json',
+			mimeType: 'application/json'
+		}).done(function(json){
+			if(json.result=="true"){
+				$('#user_most_wanted').text("ID: "+json.datos[0].ID_PERSONA+" Con "+json.datos[0].VECES+" veces buscado");
+			}else{
+			}
+		});
+		$.ajax({        
+			url: "http://siluaa.mybluemix.net/API/hora_concurrida.php",
+			method: 'GET',
+			dataType:'json',
+			mimeType: 'application/json'
+		}).done(function(json){
+			if(json.result=="true"){
+				$('#most_trafico').text("La hora mas concurrida es: "+json.datos[0].HORA+":00 Con "+json.datos[0].MAXIMO+" busquedas en esa hora");
+			}else{
+			}
+		});
+    	$.ajax({        
+			url: "http://siluaa.mybluemix.net/API/obtener_estadisticas.php",
+			method: 'GET',
+			dataType:'json',
+			mimeType: 'application/json'
+		}).done(function(json){
+			if(json.result=="true"){
+				var datos_esta = json.datos;
+				new Morris.Line({
+					  // ID of the element in which to draw the chart.
+					element: 'myfirstchart',
+						  // Chart data records -- each entry in this array corresponds to a point on
+						  // the chart.
+					data: datos_esta
+					,
+						  // The name of the data record attribute that contains x-values.
+					xkey: 'FECHA_CONSULTA',
+						  // A list of names of data record attributes that contain y-values.
+					ykeys: ['VECES'],
+						  // Labels for the ykeys -- will be displayed when you hover over the
+						  // chart.
+					labels: ['Veces']
+				});
+			}else{
+			}
+		});
+		$.ajax({        
+			url: "http://siluaa.mybluemix.net/API/hora_grafica.php",
+			method: 'GET',
+			dataType:'json',
+			mimeType: 'application/json'
+		}).done(function(json){
+			if(json.result=="true"){
+				var datos_esta = json.datos;
+				new Morris.Line({
+					  // ID of the element in which to draw the chart.
+					element: 'my2chart',
+						  // Chart data records -- each entry in this array corresponds to a point on
+						  // the chart.
+					data: datos_esta
+					,
+						  // The name of the data record attribute that contains x-values.
+					xkey: 'HORA',
+						  // A list of names of data record attributes that contain y-values.
+					ykeys: ['VECES'],
+						  // Labels for the ykeys -- will be displayed when you hover over the
+						  // chart.
+					labels: ['Veces']
+				});
+			}else{
+			}
+		});
+        $('#datetimepicker6').datetimepicker({
+        	locale: 'es',
+        	format: "YYYY-MM-DD"
+        });
+        $('#datetimepicker7').datetimepicker({
+        	locale: 'es',
+        	format: "YYYY-MM-DD",
+            useCurrent: false //Important! See issue #1075
+        });
+        $("#datetimepicker6").on("dp.change", function (e) {
+            $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+        });
+        $("#datetimepicker7").on("dp.change", function (e) {
+            $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+        });
+    });
+    $(document).ready(function () {
+    	$('#myfirstchart').hide();
+    	$('#my2chart').hide();
+    	$('#lmyfirstchart').hide();
+    	$('#lmy2chart').hide();
+    	$('#btn_eliminar_rangos').click(function(){
+    		var rango_inf = $('#dato1').val();
+    		var rango_sup = $('#dato2').val();
+    		if($('#dato1').val()=="" || $('#dato1').val()== null){
+    			alert("Por favor ingresa el límite inferior de elminación");
+    			$('#datos1').focus();
+    		}else{
+    			if($('#dato2').val()=="" || $('#dato2').val()== null){
+    				alert("Por favor ingresa el límite superior de eliminación");
+    				$('#datos2').focus();
+    			}else{
+    				$.ajax({        
+				        url: "http://siluaa.mybluemix.net/API/borrar_rango_formulario.php",
+				        method: 'GET',
+				        data: {rango_inf: rango_inf, rango_sup: rango_sup},
+				        dataType:'json',
+				        mimeType: 'application/json'
+				        }).done(function(json){
+					    if(json.result=="true"){
+					        alert("Registros eliminados con éxito");
+					    }else{
+					       	alert(json.mensaje);
+					    }
+				    });
+    			}
+    		}
+    	});
+    	$('#btn_cambiar_con').click(function(){
+			if($('#id').val()=="" || $('#id').val()==null){
+				alert("Ingresa id de la persona");
+				return;
+			}else if($('#new1').val()=="" || $('#new1').val()==null){
+				alert("Ingresa la nueva contraseña");
+				return;
+			}else if($('#new2').val()=="" || $('#new2').val()==null){
+				alert("Ingresa la nueva contraseña nuevamente");
+				return;
+			}else{
+	        	var id=$('#id').val();
+				$.ajax({
+					url: "http://siluaa.mybluemix.net/API/guardar_contra.php",
+				    method: 'GET',
+				    data: {id: id, contra: $('#new1').val()},
+				    dataType:'json',
+				    mimeType: 'application/json'
+				}).done(function(json){
+					if(json.result=="true"){
+					    alert("Contraseña cambiada con éxito");
+					    $('#id').val("");
+					    $('#new1').val("");
+					    $('#new2').val("");
+					}else{
+					    alert(json.mensaje);
+					}
+				});
+			}
+		});
+    	$('#btn_salir').click(function () {
+			window.location="log-in.html";
+		});
+		$('#btn_estadisticas').click(function () {
+			$('#myfirstchart').toggle('show');
+			$('#my2chart').toggle('show');
+			$('#lmyfirstchart').toggle('show');
+			$('#lmy2chart').toggle('show');
+		});
+		$('#myfirstchart').empty();
+		$('#my2chart').empty();
+		
+    });
+	
+	
+
+</script>

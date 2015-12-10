@@ -14,7 +14,7 @@ body{
 	color: #003F3D;
 	font-size: 1.2em;
 }
-#btn_buscar,#btn_guardar,#btn_cambiar_contra,#btn_cambiar_con{
+#btn_buscar,#btn_guardar,#btn_cambiar_contra,#btn_cambiar_con,#btn_estadisticas,#btn_olvido{
 	background-color: #003F3D;
 	color: #fff;
 }
@@ -30,4 +30,8 @@ body{
 #btn_salir{
 	background-color: #630003;
 	color: #fff;
+}
+#btn_eliminar_rangos{
+	 background-color: #FF3B36;
+	 color: #fff;
 }
