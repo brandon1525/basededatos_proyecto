@@ -14,7 +14,7 @@ body{
 	color: #003F3D;
 	font-size: 1.2em;
 }
-#btn_buscar,#btn_guardar{
+#btn_buscar,#btn_guardar,#btn_cambiar_contra,#btn_cambiar_con{
 	background-color: #003F3D;
 	color: #fff;
 }
@@ -26,4 +26,8 @@ body{
 	color: #555;
 	font-family: 'Poiret One', cursive;
 	font-size: 1.2em;
+}
+#btn_salir{
+	background-color: #630003;
+	color: #fff;
 }

@@ -51,6 +51,13 @@
   </head>
   <body>
     <div class="container">
+      <p></p>
+      <div class="row">
+        <div class="col-xs-11"></div>
+        <div class="col-xs-1">
+          <button type="button" class="btn btn-lg" id="btn_salir">salir</button>
+        </div>
+      </div>
       <div class="row">
         <div class="col-md-1">
         </div>
@@ -106,14 +113,14 @@
           <div id='calendar'></div>
         </div>
       </div>
-      <div class="row">
-        <a href="index.html">Salir</a>
-      </div>
     </div>
   </body>
 </html>
 <script>
 $(document).ready(function() {
+  $('#btn_salir').click(function () {
+      window.location="index.html";
+    });
   $('#calendar').fullCalendar({
     header: {
       left: '',

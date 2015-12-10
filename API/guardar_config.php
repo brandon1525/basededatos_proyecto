@@ -8,7 +8,7 @@ require 'modelo.php';
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $id = $_GET['id'];
         $id_configuracion = $_GET['id_configuracion'];
-        $retorno = Modelo::update_configbyID($id,$id_configuracion);
+        $retorno = Modelo::update_configbyID((int)$id,(int)$id_configuracion);
         if ($retorno) {
             $persona["result"] = "true";
             $persona["exito"] = $retorno;

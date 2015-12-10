@@ -147,11 +147,27 @@ class Modelo{
     public static function update_configbyID($id,$id_configuracion)
     {
         try{
-            $consulta = "UPDATE persona SET ID_CONFIGURACION=? WHERE ID=?";
-            $cmd = Database::getInstance()->getDb()->prepare($consulta);
-            $cmd->execute(array($id_configuracion,$id));
-            return $cmd;   
+            $consulta = "UPDATE persona SET ID_CONFIGURACION = " . $id_configuracion . 
+            " WHERE ID = " . $id;
+            $comando = Database::getInstance()->getDb()->prepare($consulta);
+            $comando ->execute(array($id_configuracion,$id));
+            return $comando;   
         }catch(PDOException $e){
+            echo $e;
+            return false;
+        }
+        
+    }
+    public static function update_contrabyID($id,$contra)
+    {
+        try{
+            $consulta = "UPDATE persona SET CONTRA = '" . $contra .
+            "' WHERE ID = " . $id;
+            $comando = Database::getInstance()->getDb()->prepare($consulta);
+            $comando ->execute();
+            return $comando;   
+        }catch(PDOException $e){
+            echo $e;
             return false;
         }
         

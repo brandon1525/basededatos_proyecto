@@ -8,11 +8,10 @@ require 'modelo.php';
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $id_persona = $_GET['id'];
         $contra = $_GET['contra'];
-        $retorno = Modelo::ingresarPersonaById($id_persona,$contra);
+        $retorno = Modelo::update_contrabyID($id_persona,$contra);
         if ($retorno) {
             $persona["result"] = "true";
             $persona["datos"] = $retorno;
-            $persona["configuracion_persona"] = Modelo::getConfigurationByIdForPerson($id_persona);
             echo json_encode($persona);
         } else {
             echo json_encode(
